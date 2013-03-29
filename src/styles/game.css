@@ -1,0 +1,35 @@
+body {
+	background: #fafafa;
+}
+
+.container {
+	margin: 50px auto 0 auto;
+}
+
+.cell {
+	background-color: transparent;
+	width: 10px;
+	height: 10px;
+	float: left;
+	margin: 2px 2px 0 0;
+	border: solid 1px black;
+	-webkit-border-radius: 5px;
+		 -moz-border-radius: 5px;
+				  border-radius: 5px;
+}
+
+.cell.alive {
+	background-color: green;
+}
+
+.world {
+  padding: 10px 6px 10px 10px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  color: inherit;
+  background-color: #eeeeee;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}

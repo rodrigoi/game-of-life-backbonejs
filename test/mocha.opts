@@ -1,0 +1,4 @@
+--compilers coffee:coffee-script
+--watch
+--reporter nyan
+--ui bdd

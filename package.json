@@ -1,0 +1,27 @@
+{
+  "name": "Conways-Game-of-Life",
+  "version": "0.0.0",
+  "description": "This is a kata for Conway's Game of Life implemented using Backbone.JS",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodrigoi/dojo"
+  },
+  "keywords": [
+    "kata"
+  ],
+  "author": "Rodrigo Iloro",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "mocha": "~1.8.2",
+    "chai": "~1.5.0",
+    "sinon-chai": "~2.3.1",
+    "bower": "~0.8.5",
+    "grunt": "~0.4.1",
+    "express": "~3.1.0",
+    "coffee-script": "~1.6.2"
+  }
+}
