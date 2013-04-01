@@ -15,7 +15,7 @@ describe "World View", ->
 			{ x: 0, y: 0 } #cell at 0
 			{ x: 1, y: 0 } #cell at 1
 			{ x: 2, y: 0 } #cell at 2
-		]
+		], width: 3, height: 1
 
 		@worldView = new Application.WorldView
 			collection: @world
@@ -71,7 +71,7 @@ describe "World View", ->
 			{ x: 0, y: 0, alive: true }
 			{ x: 1, y: 0, alive: true }
 			{ x: 2, y: 0, alive: false }
-		]
+		], width: 3, height: 1
 
 		worldView = new Application.WorldView
 			collection: world

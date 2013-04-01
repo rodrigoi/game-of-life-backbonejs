@@ -22,32 +22,18 @@ if (typeof module !== "undefined" && module.exports) {
 			var applicationView = new Application.AppView();
 			applicationView.render();
 
-			var worldCollection = this.createEmptyWorld();
-
 			//initialize world view
 			this.worldView = new Application.WorldView({
-				collection: worldCollection
+				collection: new Application.World(null, {
+					width: this.width,
+					height: this.height
+				})
 			});
 			this.worldView.render();
 
 			Backbone.on("save", this.save, this);
 			Backbone.on("load", this.load, this);
 			Backbone.on("randomize", this.randomize, this);
-		},
-		createEmptyWorld: function(){
-			//create as many empty cells as needed
-			var world = new Application.World();
-
-			for (var y = 0; y < this.height; y++) {
-				for (var x = 0; x < this.width; x++){
-					world.add(new Application.Cell({ x: x, y: y }));
-				}
-			};
-
-			world.width = this.width;
-			world.height = this.height;
-
-			return world;
 		},
 		save: function(){
 			localStorage.setItem("world", JSON.stringify({

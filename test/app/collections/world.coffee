@@ -5,14 +5,30 @@ Application = require "../../../src/app/collections/world"
 
 describe "World", ->
 
+	describe "Defaults", ->
+		it "should default to a 0 by 0 grid if no parameters are provided on the constructor", ->
+			world = new Application.World()
+			world.width.should.not.be.ok
+			world.height.should.not.be.ok
+			world.models.should.be.empty
+
+		it "should accept an options argument with width and height", ->
+			world = new Application.World null,
+				width: 1, height: 1
+			world.width.should.equal 1
+			world.height.should.equal 1
+
+		it "should initialize to an empty collection with the number of elements specified by width times height", ->
+			world = new Application.World null,
+				width: 2, height: 2
+			world.models.should.have.length 4
+
 	describe "Single cell world", ->
 
 		it "should return false for a single cell world", ->
 			@world = new Application.World [
 				{ x: 0, y: 0 } #cell at 0
-			]
-			@world.with = 1
-			@world.height = 1
+			], width: 1, height: 1
 
 			cell = @world.at 0
 			@world.liveNeighbours(cell).should.equal 0
@@ -22,9 +38,7 @@ describe "World", ->
 			@world = new Application.World [
 				{ x: 0, y: 0 } #cell at 0
 				{ x: 1, y: 0 } #cell at 1
-			]
-			@world.width = 2
-			@world.height = 1
+			], width: 2, height: 1
 
 		it "should correcly count living neighbours for the left cell", ->
 			cell = @world.at 0
@@ -54,9 +68,7 @@ describe "World", ->
 
 				{ x: 0, y: 1} #cell at 2
 				{ x:1 , y: 1} #cell at 3
-			]
-			@world.width = 2
-			@world.height = 2
+			], width: 2, height: 2
 
 		it "should correcly count living neighbours for the top left cell", ->
 			cell = @world.at 0
@@ -124,9 +136,7 @@ describe "World", ->
 				{ x: 0, y: 2, alive: false } #cell at 6
 				{ x: 1, y: 2, alive: false } #cell at 7
 				{ x: 2, y: 2, alive: false } #cell at 8
-			]
-			@world.width = 3
-			@world.height = 3
+			], width: 3, height: 3
 
 		describe "Neighbours for the center cell", ->
 

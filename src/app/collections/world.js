@@ -19,8 +19,19 @@ if (typeof module !== "undefined" && module.exports) {
 			[-1,  0],          [1,  0],
 			[-1,  1], [0,  1], [1,  1]
 		],
-		width: 0,
-		height: 0,
+		initialize: function(models, options){
+			options || (options = {});
+			this.width = options.width || 0;
+			this.height = options.height || 0;
+
+			if(!models) {
+				for (var y = 0; y < this.height; y++) {
+					for (var x = 0; x < this.width; x++){
+						this.add(new Application.Cell({ x: x, y: y }));
+					}
+				};
+			}
+		},
 		liveNeighbours: function(cell) {
 			var x = cell.get("x");
 			var y = cell.get("y");
