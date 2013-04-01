@@ -1,5 +1,5 @@
 --compilers coffee:coffee-script
---watch
 --recursive
+--watch
 --reporter nyan
 --ui bdd

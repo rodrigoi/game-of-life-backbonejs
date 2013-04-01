@@ -2,7 +2,20 @@ var Application = Application || {};
 
 if (typeof module !== "undefined" && module.exports) {
 	var _ = _ || require("underscore");
-	var Backbone = Backbone || require("backbone");
+	//var Backbone = Backbone || require("backbone");
+
+	//the shorter the list of dependencies, the better
+	Backbone = require("./base/component");
+	_.extend(Application, require("./components/ticker"));
+	Application.use(Backbone);
+	_.extend(Application, require("./views/application"));
+	_.extend(Application, require("./collections/world"));
+	_.extend(Application, require("./views/world"));
+
+	if (typeof localStorage === "undefined" || localStorage === null) {
+	  var LocalStorage = require('node-localstorage').LocalStorage;
+	  localStorage = new LocalStorage('./scratch');
+	}
 
 	module.exports = Application;
 }
@@ -57,9 +70,7 @@ if (typeof module !== "undefined" && module.exports) {
 			}
 		},
 		randomize: function(){
-			this.worldView.collection.each(function(item){
-				item.set("alive", !!Math.round(Math.random() * 1));
-			});
+			this.worldView.collection.randomize();
 		}
 	});
 

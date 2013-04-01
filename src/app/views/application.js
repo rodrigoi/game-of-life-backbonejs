@@ -7,11 +7,10 @@ if (typeof module !== "undefined" && module.exports) {
 	Backbone.$ = jQuery;
 
 	Konami = function(){}
-
 	module.exports = Application;
 }
 
-$(function(){
+(function(){
 	"use strict";
 
 	Application.AppView = Backbone.View.extend({
@@ -28,9 +27,9 @@ $(function(){
 			"click #randomize": "onRandomize"
 		},
 		initialize: function(){
-			var konami = new Konami(function(){
-				$("#konami").modal("show");
-			});
+			//var konami = new Konami(function(){
+			//	$("#konami").modal("show");
+			//});
 
 			Backbone.on("regenerate", this.render, this);
 			Backbone.on("tick", this.onTick, this);
@@ -77,4 +76,4 @@ $(function(){
 		}
 	});
 
-});
+})();

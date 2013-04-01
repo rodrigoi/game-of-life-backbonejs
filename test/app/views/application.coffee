@@ -5,7 +5,6 @@ should = chai.should()
 chai.use require("sinon-chai")
 
 Backbone = require "backbone"
-Backbone.$ = require "jquery"
 
 Application = require "../../../src/app/views/application"
 

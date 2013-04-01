@@ -7,6 +7,10 @@ if (typeof module !== "undefined" && module.exports) {
 	Application = require("../models/cell");
 
 	module.exports = Application;
+	module.exports.use = function(Math){
+		Math = Math
+	}
+
 }
 
 (function(){
@@ -31,6 +35,11 @@ if (typeof module !== "undefined" && module.exports) {
 					}
 				};
 			}
+		},
+		randomize: function(){
+			this.each(function(model){
+				model.set("alive", !!Math.round(Math.random() * 1));
+			});
 		},
 		liveNeighbours: function(cell) {
 			var x = cell.get("x");

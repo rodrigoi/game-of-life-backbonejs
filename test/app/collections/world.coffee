@@ -1,7 +1,15 @@
 chai = require "chai"
-should = chai.should()
+sinon = require "sinon"
 
+should = chai.should()
+chai.use require("sinon-chai")
+
+#Math = require "math"
+
+#console.log Math.random
 Application = require "../../../src/app/collections/world"
+
+Application.use Math
 
 describe "World", ->
 
@@ -22,6 +30,16 @@ describe "World", ->
 			world = new Application.World null,
 				width: 2, height: 2
 			world.models.should.have.length 4
+
+	describe "Randomize", ->
+		it "should randomize itself", ->
+			world = new Application.World null,
+				width: 10, height: 10 #large enough sample
+
+			randomSpy = sinon.spy Math, "random"
+			world.randomize()
+			randomSpy.restore()
+			randomSpy.callCount.should.equal 10 * 10
 
 	describe "Single cell world", ->
 
