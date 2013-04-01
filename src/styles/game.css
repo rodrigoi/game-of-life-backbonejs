@@ -6,7 +6,7 @@ body {
 	margin: 50px auto 0 auto;
 }
 
-.cell {
+div.world div {
 	background-color: transparent;
 	width: 10px;
 	height: 10px;
@@ -18,7 +18,7 @@ body {
 				  border-radius: 5px;
 }
 
-.cell.alive {
+div.world div.alive {
 	background-color: green;
 }
 
@@ -33,4 +33,9 @@ body {
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
+}
+
+#konami {
+	width: 670px;
+	margin-left: -335px;
 }
