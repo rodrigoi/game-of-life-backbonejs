@@ -37,10 +37,7 @@ if (typeof module !== "undefined" && module.exports) {
 		onSaveToLocalStorage: function(){
 			var patternName = this.$("input[type=text]").val();
 
-			this.trigger("save", {
-				world: this.json,
-				name: patternName
-			});
+			this.storage.addJson(this.json, patternName);
 
 			this.$("input[type=text]").val("");
 			this.$el.modal("hide");

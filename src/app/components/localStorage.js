@@ -20,7 +20,10 @@ var Application = Application || {};
 		storageItems: function(){
 			return this.items;
 		},
-		addItem: function(world, name){
+		addJson: function(json, name) {
+			localStorage.setItem(name, json);
+		},
+		addWorld: function(world, name){
 			localStorage.setItem(name, this.createJSONItem(world));
 		},
 		createJSONItem: function(world) {
