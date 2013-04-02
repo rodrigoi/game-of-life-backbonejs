@@ -21,4 +21,6 @@ To run the tests, simply run
 
 on the root folder. That will run the mocha command line runner using the mocha.opts file on the test folder.
 
+![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/grid.PNG)
+
 Have fun, and enjoy your burrito ;)
