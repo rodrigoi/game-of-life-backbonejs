@@ -11,32 +11,37 @@ if (typeof module !== "undefined" && module.exports) {
 
 	Application.SaveDialogView = Backbone.View.extend({
 		el: "#saveDialog",
-		jsonCollection: null,
+		world: null,
+		storage: null,
+		json: "",
 		events: {
 			"click #download": "onDownload",
 			"click #saveToLocalStorage": "onSaveToLocalStorage"
 		},
-		render: function(){
-			if(this.collection){
-				this.jsonCollection = JSON.stringify({
-					world: this.collection,
-					width: this.collection.width,
-					height: this.collection.height,
-					type: "world"
-				});
+		initialize: function(options){
+			options || (options = {});
 
-				this.$("textarea").text(this.jsonCollection);
-				this.$el.modal("show");
-			}
+			if (options.world) this.world = options.world;
+			if (options.storage) this.storage = options.storage;
+		},
+		render: function(){
+			this.json = this.storage.createJSONItem(this.world);
+
+			this.$("textarea").text(this.json);
+			this.$el.modal("show");
 		},
 		onDownload: function(){
-			var blob = new Blob([this.jsonCollection], { type: "text/plain;charset=utf-8"});
+			var blob = new Blob([this.json], { type: "text/plain;charset=utf-8"});
 			saveAs(blob, "life.json");
 		},
 		onSaveToLocalStorage: function(){
 			var patternName = this.$("input[type=text]").val();
-			//name validation please!
-			localStorage.setItem(patternName, this.jsonCollection);
+
+			this.trigger("save", {
+				world: this.json,
+				name: patternName
+			});
+
 			this.$("input[type=text]").val("");
 			this.$el.modal("hide");
 		}

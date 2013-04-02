@@ -2,20 +2,12 @@ var Application = Application || {};
 
 if (typeof module !== "undefined" && module.exports) {
 	var _ = _ || require("underscore");
-	//var Backbone = Backbone || require("backbone");
 
 	//the shorter the list of dependencies, the better
 	Backbone = require("./base/component");
 	_.extend(Application, require("./components/ticker"));
 	Application.use(Backbone);
 	_.extend(Application, require("./views/application"));
-	//_.extend(Application, require("./collections/world"));
-	//_.extend(Application, require("./views/world"));
-
-	//if (typeof localStorage === "undefined" || localStorage === null) {
-	//  var LocalStorage = require('node-localstorage').LocalStorage;
-	//  localStorage = new LocalStorage('./scratch');
-	//}
 
 	module.exports = Application;
 }
@@ -27,13 +19,16 @@ if (typeof module !== "undefined" && module.exports) {
 		width: 66,
 		height: 20,
 		ticker: null,
+		storage: null,
 		initialize: function(){
-			//initialize application view
 			this.ticker = new Application.Ticker();
+
+			this.storage = new Application.LocalStorage();
 
 			var applicationView = new Application.AppView({
 				width: this.width,
-				height: this.height
+				height: this.height,
+				storage: this.storage
 			});
 			applicationView.render();
 

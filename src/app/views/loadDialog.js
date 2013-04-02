@@ -11,7 +11,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 	Application.LoadDialogView = Backbone.View.extend({
 		el: "#loadDialog",
-		worldView: null,
+		worldCollection: null,
 		events: {
 			"dragenter div.well": "onDragEnter",
 			"dragover div.well": "onDragOver",
@@ -21,8 +21,6 @@ if (typeof module !== "undefined" && module.exports) {
 		},
 		initialize: function(options){
 			options || (options = {});
-
-
 		},
 		render: function(){
 			this.$("table tbody").empty();
@@ -73,13 +71,18 @@ if (typeof module !== "undefined" && module.exports) {
 			this.$el.modal("hide");
 		},
 		_loadFromString: function(jsonWorld){
-			var newWorld = new Application.World(JSON.parse(jsonWorld).world);
+			var savedData = JSON.parse(jsonWorld);
+			var newWorld = new Application.World(savedData.world);
 
-			for(var i = 0; i < this.worldView.collection.length; i++){
-				var cell = this.worldView.collection.at(i);
-				var newCellValue = newWorld.at(i).get("alive");
-				if(cell.get("alive") !== newCellValue){
-					cell.set("alive", newCellValue);
+			for(var i = 0; i < newWorld.length; i++){
+				var newCell = newWorld.at(i);
+
+				var cell = this.worldCollection.at(
+					newCell.get("x") + newCell.get("y") * savedData.width
+				);
+
+				if(!cell.get("alive")){
+					cell.set("alive", true);
 				}
 			}
 		}

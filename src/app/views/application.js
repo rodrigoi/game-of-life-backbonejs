@@ -30,6 +30,7 @@ if (typeof module !== "undefined" && module.exports) {
 		el: ".container",
 		children: [],
 		dialogs: [],
+		storage: null,
 		events: {
 			"click #start": "onStart",
 			"click #stop": "onStop",
@@ -43,6 +44,7 @@ if (typeof module !== "undefined" && module.exports) {
 		},
 		initialize: function(options){
 			options || (options = {});
+			this.storage = options.storage || {};
 
 			this.initializeChildren(options);
 			this.initializeDialogs(options);
@@ -66,25 +68,19 @@ if (typeof module !== "undefined" && module.exports) {
 			var worldView = this.children[1] || {};
 
 			var saveView = new Application.SaveDialogView({
-				collection: worldView.collection
+				world: worldView.collection,
+				storage: this.storage
 			});
 			this.dialogs.push(saveView);
 			saveView.listenTo(this, "save", saveView.render);
 
-			var storageItems = new Application.Storage();
-			for (var i = 0, len = localStorage.length; i < len; i++){
-				storageItems.add(new Application.StorageItem({
-					index: i,
-					key: localStorage.key(i),
-					value: localStorage.getItem(localStorage.key(i))
-				}));
-			}
 			var loadView = new Application.LoadDialogView({
-				collection: storageItems
+				collection: this.storage.storageItems()
 			});
-			loadView.worldView = worldView;
+			loadView.worldCollection = worldView.collection;
 			loadView.listenTo(this, "load", loadView.render)
 			this.dialogs.push(loadView);
+
 		},
 		render: function(){
 			_.each(this.children, function(child){
