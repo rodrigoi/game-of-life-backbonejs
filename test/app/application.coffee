@@ -6,7 +6,7 @@ chai.use require("sinon-chai")
 
 Application = require "../../src/app/application"
 
-describe "Application", ->
+describe.skip "Application", ->
 	it "should exist as a variable for the Namespace", ->
 		should.exist Application
 

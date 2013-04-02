@@ -24,12 +24,14 @@ if (typeof module !== "undefined" && module.exports) {
 			"submit #setTickForm": "onSetTickFromSubmit",
 			"click #save": "onSave",
 			"click #load": "onLoad",
-			"click #randomize": "onRandomize"
+			"click #randomize": "onRandomize",
+			"click #gun": "onGun"
 		},
 		initialize: function(){
-			//var konami = new Konami(function(){
-			//	$("#konami").modal("show");
-			//});
+			var _that = this;
+			var konami = new Konami(function(){
+				_that.$("#next").addClass("wobble animated");
+			});
 
 			Backbone.on("regenerate", this.render, this);
 			Backbone.on("tick", this.onTick, this);
@@ -53,7 +55,13 @@ if (typeof module !== "undefined" && module.exports) {
 			Backbone.trigger("stopTimer");
 		},
 		onNext: function(){
-			Backbone.trigger("tick");
+			var nextButton = this.$("#next");
+			if(nextButton.hasClass("animated")){
+				nextButton.removeClass("animated");
+				this._konami();
+			} else {
+				Backbone.trigger("tick");
+			}
 		},
 		onClear: function(){
 			this.generation = 0;
@@ -73,6 +81,13 @@ if (typeof module !== "undefined" && module.exports) {
 		},
 		onRandomize: function(){
 			Backbone.trigger("randomize");
+		},
+		onGun: function(){
+
+		},
+		_konami: function(){
+			var konami = new Application.Konami();
+			konami.render();
 		}
 	});
 

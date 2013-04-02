@@ -26,8 +26,8 @@ if (typeof module !== "undefined" && module.exports) {
 	_.extend(Application, {
 		width: 66,
 		height: 20,
-		worldView: null,
 		ticker: null,
+		worldView: null,
 		initialize: function(){
 			//initialize application view
 			this.ticker = new Application.Ticker();
@@ -49,25 +49,24 @@ if (typeof module !== "undefined" && module.exports) {
 			Backbone.on("randomize", this.randomize, this);
 		},
 		save: function(){
-			localStorage.setItem("world", JSON.stringify({
-				world: this.worldView.collection,
-				width: this.width,
-				height: this.height,
-				type: "world"
-			}));
+			var saveView = new Application.SaveDialogView({
+				collection: this.worldView.collection
+			});
+			saveView.render();
 		},
 		load: function(){
-			if(localStorage.world){
-				var newWorld = new Application.World(JSON.parse(localStorage.world).world);
-
-				for(var i = 0; i < this.worldView.collection.length; i++){
-					var cell = this.worldView.collection.at(i);
-					var newCellValue = newWorld.at(i).get("alive");
-					if(cell.get("alive") !== newCellValue){
-						cell.set("alive", newCellValue);
-					}
-				}
+			var storageItems = new Application.Storage();
+			for (var i = 0, len = localStorage.length; i < len; i++){
+				storageItems.add(new Application.StorageItem({
+					index: i,
+					key: localStorage.key(i),
+					value: localStorage.getItem(localStorage.key(i))
+				}));
 			}
+
+			var loadView = new Application.LoadDialogView({ collection: storageItems });
+			loadView.worldView = this.worldView;
+			loadView.render();
 		},
 		randomize: function(){
 			this.worldView.collection.randomize();

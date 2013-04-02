@@ -10,7 +10,6 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports.use = function(Math){
 		Math = Math
 	}
-
 }
 
 (function(){

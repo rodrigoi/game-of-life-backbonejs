@@ -5,6 +5,7 @@
     "handlebars": "~1.0.0-rc.3",
     "modernizr": "~2.6.2",
     "underscore": "~1.4.4",
-    "konami-js": "git://github.com/snaptortoise/konami-js.git"
+    "konami-js": "git://github.com/snaptortoise/konami-js.git",
+    "FileSaver.js": "git://github.com/eligrey/FileSaver.js.git"
   }
 }

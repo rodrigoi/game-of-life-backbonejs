@@ -9,12 +9,9 @@
 		<title>Conway's Game of Life</title>
 		<meta name="description" content="Conway's Game of Life Kata">
 		<meta name="viewport" content="width=device-width">
-
 		<link rel="stylesheet" type="text/css" href="vendor/bootstrap/docs/assets/css/bootstrap.css">
 		<link rel="stylesheet" href="styles/game.css">
-
 		<script src="vendor/modernizr/modernizr.js"></script>
-
 	</head>
 	<body>
 		<div class="container">
@@ -25,10 +22,8 @@
 				<button id="clear" class="btn btn-danger">Clear</button>
 			</div>
 			<p>Generation <span id="generationCount" class="badge"></span></p>
-
 			<div class="world clearfix">
 			</div>
-
 			<form class="form-inline" id="setTickForm">
 				<div class="input-append">
 					<input class="span1" id="tick" type="text" value="50" placeholder="50"/>
@@ -36,43 +31,94 @@
 				</div>
 				<button class="btn">Set</button>
 			</form>
-
 			<div class="btn-toolbar">
 				<button id="save" class="btn btn-info">Save</button>
 				<button id="load" class="btn btn-primary">Load</button>
 				<button id="randomize" class="btn btn-primary">Randomize World</button>
+				<button id="gun" class="btn btn-primary">Gosper's Glider Gun</button>
 			</div>
 		</div>
-
-<!--
+		<!-- save modal dialog -->
+		<div id="saveDialog" class="modal hide fade">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h3>Save Grid State</h3>
+		  </div>
+			<div class="modal-body">
+				<div class="controls-row">
+					<textarea class="input-block-level span4"></textarea>
+				</div>
+				<hr />
+				<div class="controls-row">
+					<button id="download" class="btn btn-success btn-block">Download as a JSON File</button>
+				</div>
+				<hr />
+				<div class="controls-row">
+					<input type="text" class="input-block-level" placeholder="Pattern Name" required />
+					<button id="saveToLocalStorage" class="btn btn-success btn-block">Save To Local Storage</button>
+				</div>
+			</div>
+			<div class="modal-footer"></div>
+		</div>
+		<!-- load modal dialog -->
+		<div id="loadDialog" class="modal hide fade">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    <h3>Load Saved Grid</h3>
+		  </div>
+			<div class="modal-body">
+				<div class="well">Drop your file here</div>
+				<hr />
+				<div class="controls-row">
+					<input type="text" class="input-block-level" placeholder="Paste your JSON here" required />
+					<button id="upload" class="btn btn-success btn-block">Load</button>
+				</div>
+				<hr />
+				<div class="controls-row short-table">
+					<table class="table table-bordered table-hover table-condensed">
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer"></div>
+		</div>
+		<!-- konami code modal -->
 		<div id="konami" class="modal hide fade">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		    <h3>Here, have some music :)</h3>
 		  </div>
 		  <div class="modal-body">
-				<iframe width="640" height="360" src="http://www.youtube.com/embed/_acDrLnhOL0?rel=0" frameborder="0" allowfullscreen></iframe>
+				<iframe width="640" height="360" frameborder="0" allowfullscreen></iframe>
 		  </div>
 		</div>
--->
-
+		<!-- vendor scripts -->
 		<script src="vendor/jquery/jquery.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap-dropdown.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap-modal.js"></script>
 		<script src="vendor/underscore/underscore.js"></script>
 		<script src="vendor/backbone/backbone.js"></script>
+		<script src="vendor/FileSaver.js/FileSaver.js"></script>
 		<script src="vendor/konami-js/konami.js"></script>
-
+		<!-- components -->
 		<script src="app/base/component.js"></script>
 		<script src="app/components/ticker.js"></script>
-
+		<!-- models -->
 		<script src="app/models/cell.js"></script>
+		<script src="app/models/storageItem.js"></script>
+		<!-- collections -->
 		<script src="app/collections/world.js"></script>
-
+		<script src="app/collections/storage.js"></script>
+		<!-- views -->
 		<script src="app/views/application.js"></script>
 		<script src="app/views/cell.js"></script>
+		<script src="app/views/konami.js"></script>
+		<script src="app/views/loadDialog.js"></script>
+		<script src="app/views/saveDialog.js"></script>
+		<script src="app/views/storageItem.js"></script>
 		<script src="app/views/world.js"></script>
-
+		<!-- application and execution entry point -->
 		<script src="app/application.js"></script>
 		<script src="app/main.js"></script>
 	</body>
