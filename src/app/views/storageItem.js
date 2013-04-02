@@ -19,6 +19,9 @@ if (typeof module !== "undefined" && module.exports) {
 			"click .load": "onLoad",
 			"click .remove": "onRemove"
 		},
+		initilize: function(){
+			this.listenTo(this.model, "destroy", this.destroy);
+		},
 		render: function(){
 			this.$el.html(this.template(this.model.attributes));
 			return this;
@@ -27,6 +30,7 @@ if (typeof module !== "undefined" && module.exports) {
 			this.trigger("loadStorageItem", this.model);
 		},
 		onRemove: function(){
+			this.model.destroy();
 			this.trigger("removeStorageItem", this.model);
 		}
 	});

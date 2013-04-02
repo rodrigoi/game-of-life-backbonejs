@@ -1,5 +1,11 @@
 var Application = Application || {};
 
+if (typeof module !== "undefined" && module.exports) {
+	var Backbone = Backbone || require("backbone");
+
+	module.exports = Application;
+}
+
 (function(){
 	"use strict";
 
@@ -12,6 +18,11 @@ var Application = Application || {};
 			"dragleave div.well": "onDragLeave",
 			"drop div.well": "onDrop",
 			"click #upload": "onUpload"
+		},
+		initialize: function(options){
+			options || (options = {});
+
+
 		},
 		render: function(){
 			this.$("table tbody").empty();

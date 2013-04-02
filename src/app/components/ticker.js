@@ -20,26 +20,22 @@ if (typeof module !== "undefined" && module.exports) {
 		timer:null,
 		initialize: function(){
 			Backbone.Component.prototype.initialize.apply(this, arguments);
-
-			Backbone.on("startTimer", this.onStartTimer, this);
-			Backbone.on("stopTimer", this.onStopTimer, this);
-			Backbone.on("changeSpeed", this.onChangeSpeed, this);
 		},
-		onStartTimer: function(){
+		start: function(){
 			if(!this.timer){
 				this.timer = setInterval(this.onTick, this.tick)
 			}
 		},
-		onStopTimer: function(){
+		stop: function(){
 			if(this.timer){
 				this.timer = clearInterval(this.timer);
 			}
 		},
-		onChangeSpeed: function(newSpeed){
+		changeSpeed: function(newSpeed){
 			this.tick = newSpeed;
 			if(this.timer){
-				this.onStopTimer()
-				this.onStartTimer()
+				this.stop()
+				this.start()
 			}
 		},
 		onTick: function(){

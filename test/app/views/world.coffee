@@ -31,17 +31,6 @@ describe "World View", ->
 		regenerateSpy.should.have.been.calledOnce
 		regenerateSpy.restore()
 
-	it "should bind to the clear event", ->
-		clearCellsSpy = sinon.spy Application.WorldView.prototype, "clearCells"
-		@worldView = new Application.WorldView
-			collection: @world
-
-		Backbone.trigger "clear"
-		Backbone.off "clear" #test performance trick
-
-		clearCellsSpy.should.have.been.calledOnce
-		clearCellsSpy.restore()
-
 	it "should return the view object when calling render", ->
 		@worldView.render().should.be.equal @worldView
 
@@ -76,7 +65,7 @@ describe "World View", ->
 		worldView = new Application.WorldView
 			collection: world
 
-		worldView.clearCells()
+		worldView.clear()
 
 		world.at(0).get("alive").should.not.be.ok
 		world.at(1).get("alive").should.not.be.ok

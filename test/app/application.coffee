@@ -6,7 +6,7 @@ chai.use require("sinon-chai")
 
 Application = require "../../src/app/application"
 
-describe.skip "Application", ->
+describe "Application", ->
 	it "should exist as a variable for the Namespace", ->
 		should.exist Application
 
@@ -30,14 +30,5 @@ describe.skip "Application", ->
 		after ->
 			@clock.restore()
 
-		it "should initialize the ticker and worldView objects", ->
-			Application.worldView.should.exist
+		it "should initialize the ticker objects", ->
 			Application.ticker.should.exist
-
-		it "should call the randomize method of the world view collection", ->
-			randomizeSpy = sinon.spy Application.World.prototype, "randomize"
-
-			Application.randomize()
-
-			randomizeSpy.should.have.been.calledOnce
-			randomizeSpy.restore()

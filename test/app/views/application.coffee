@@ -5,19 +5,33 @@ should = chai.should()
 chai.use require("sinon-chai")
 
 Backbone = require "backbone"
+_ = require "underscore"
 
 Application = require "../../../src/app/views/application"
 
 testClickEvent = (method, element) ->
-	spy = sinon.spy Application.AppView.prototype, method
+	stub = sinon.stub Application.AppView.prototype, method
 
 	view = new Application.AppView()
+	removeListeners view
+
 	view.setElement "<div><a id=\"#{element}\"></a></div>"
 	view.$("##{element}").click()
 
-	spy.should.have.been.calledOnce
+	stub.should.have.been.calledOnce
 
-	spy.restore()
+	stub.restore()
+	return
+
+removeListeners = (view) ->
+	_.each view.children, (children) ->
+		children.stopListening view
+		return
+
+	_.each view.dialogs, (children) ->
+		children.stopListening view
+		return
+
 	return
 
 describe "Application View", ->
@@ -29,6 +43,7 @@ describe "Application View", ->
 
 	beforeEach ->
 		@applicationView = new Application.AppView()
+		removeListeners @applicationView
 
 	describe "Event Handlers", ->
 		it "should bind to the click event on the \"start\" element", ->
@@ -63,43 +78,24 @@ describe "Application View", ->
 		it "should bind to the click event on the \"randomize\" element", ->
 			testClickEvent "onRandomize", "randomize"
 
+		it "should bind to the click event on the \"load gun\" element", ->
+			testClickEvent "onGun", "gun"
+
 	describe "Initialize", ->
-		it "should bind to the global \"regenerate\" event", ->
-			renderSpy = sinon.spy Application.AppView.prototype, "render"
+		it "should call the initialize children method", ->
+			stub = sinon.stub Application.AppView.prototype, "initializeChildren"
 			@applicationView = new Application.AppView()
-			Backbone.trigger "regenerate"
-			Backbone.off "regenerate"
+			stub.should.have.been.calledOnce
+			stub.restore()
 
-			renderSpy.should.have.been.calledOnce
-			renderSpy.restore()
-
-		it "should bind to the global \"tick\" event", ->
-			renderSpy = sinon.spy Application.AppView.prototype, "onTick"
+		it "should call the initialize dialogs method", ->
+			stub = sinon.stub Application.AppView.prototype, "initializeDialogs"
 			@applicationView = new Application.AppView()
-			Backbone.trigger "tick"
-			Backbone.off "tick"
-
-			renderSpy.should.have.been.calledOnce
-			renderSpy.restore()
+			stub.should.have.been.calledOnce
+			stub.restore()
 
 	describe "Render", ->
-		it "should render the generation counter", ->
-			@applicationView.generation = 100
-			@applicationView.setElement "<div><span id=\"generationCount\"></span></div>"
-			@applicationView.render()
-			@applicationView.$("#generationCount").text().should.equal "100"
-
-		it "should increment the generation counter on tick", ->
-			@applicationView.generation.should.equal 0
-			@applicationView.onTick()
-			@applicationView.generation.should.equal 1
-
-		it "should render itself on tick", ->
-			renderSpy = sinon.spy @applicationView, "render"
-			@applicationView.onTick()
-			renderSpy.should.have.been.calledOnce
-
-			renderSpy.restore()
+		it "should return itself to provide a chainable interface"
 
 	describe "Start", ->
 		it "should disable start, next, clear, save, load and randomize ui elements on start", ->
@@ -114,12 +110,11 @@ describe "Application View", ->
 			@applicationView.onStart()
 			@applicationView.$("a[disabled]").length.should.equal 0
 
-		it "should trigger global \"startTimer\" event on start", (done) ->
-			Backbone.on "startTimer", ->
+		it "should trigger local \"start\" event on start", (done) ->
+			@applicationView.on "start", ->
 				done()
 
 			@applicationView.onStart()
-			Backbone.off "startTimer"
 
 	describe "Stop", ->
 		it "should enable start, next, clear, save, load and randomize ui elements on stop", ->
@@ -134,68 +129,57 @@ describe "Application View", ->
 			@applicationView.onStop()
 			@applicationView.$("a[disabled]").length.should.equal 1
 
-		it "should trigger global \"stopTimer\" event on stop handler", (done) ->
-			Backbone.on "stopTimer", ->
+		it "should trigger local \"stopTimer\" event on stop handler", (done) ->
+			@applicationView.on "stop", ->
 				done()
 
 			@applicationView.onStop()
-			Backbone.off "stopTimer"
+			@applicationView.off "stop"
 
 	describe "other UI Events", ->
-		it "should trigger the global \"tick\" event on the next handler", (done) ->
+		it "should trigger the local \"tick\" event on the next handler", (done) ->
 			Backbone.on "tick", ->
 				done()
 			@applicationView.onNext()
 			Backbone.off "tick"
 
 		describe "Clear", ->
-			it "should reset the generation counter to zero", ->
-				@applicationView.generation = 1
-				@applicationView.onClear()
-				@applicationView.generation.should.equal 0
-
-			it "should render the application view", ->
-				renderSpy = sinon.spy Application.AppView.prototype, "render"
-				@applicationView.onClear()
-				renderSpy.should.have.been.calledOnce
-				renderSpy.restore()
-
-			it "should trigger the global \"clear\" event", (done) ->
-				Backbone.on "clear", ->
+			it "should trigger the local \"clear\" event", (done) ->
+				@applicationView.on "clear", ->
 					done()
 				@applicationView.onClear()
-				Backbone.off "clear"
+				@applicationView.off "clear"
 
-		it "should trigger the global \"changeSpeed\" event on the form submit event handler with the new speed", (done) ->
+		it "should trigger the local \"changeSpeed\" event on the form submit event handler with the new speed", (done) ->
 			@applicationView.setElement "<div><form id=\"setTickForm\"><input id=\"tick\" type=\"text\" value=\"500\"/></form></div>"
 
-			Backbone.on "changeSpeed", (newSpeed) ->
+			@applicationView.on "changeSpeed", (newSpeed) ->
 				newSpeed.should.equal "500"
 				done()
 
 			@applicationView.onSetTickFromSubmit()
-			Backbone.off "changeSpeed"
+			@applicationView.off "changeSpeed"
 
 		it "should cancel the form submit on the form submit event handler", ->
 			@applicationView.onSetTickFromSubmit().should.not.be.ok
 
-		it "should trigger the global \"save\" event on save handler", (done) ->
-			Backbone.on "save", ->
+		it "should trigger the local \"save\" event on save handler", (done) ->
+			@applicationView.on "save", ->
 				done()
 
 			@applicationView.onSave()
-			Backbone.off "save"
+			@applicationView.off "save"
 
-		it "should trigger the global \"load\" event on load handler", (done) ->
-			Backbone.on "load", ->
+		it "should trigger the local \"load\" event on load handler", (done) ->
+			@applicationView.on "load", ->
 				done()
 
 			@applicationView.onLoad()
-			Backbone.off "load"
+			@applicationView.off "load"
 
-		it "should trigger the global \"randomize\" event on randomize handler", (done) ->
-			Backbone.on "randomize", ->
+		it "should trigger the local \"randomize\" event on randomize handler", (done) ->
+			@applicationView.on "randomize", ->
 				done()
 
 			@applicationView.onRandomize()
-			Backbone.off "randomize"
+			@applicationView.off "randomize"

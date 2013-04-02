@@ -9,17 +9,6 @@ Application = require "../../../src/app/components/ticker"
 
 Application.use Backbone
 
-testEventBinding = (callbackName, eventName) =>
-	spy = sinon.spy Application.Ticker.prototype, callbackName
-	ticker = new Application.Ticker()
-
-	Backbone.trigger eventName
-	Backbone.off eventName
-
-	spy.should.have.been.calledOnce
-	spy.restore()
-	return
-
 describe "Ticker Component", ->
 	before ->
 		@clock = sinon.useFakeTimers()
@@ -46,22 +35,13 @@ describe "Ticker Component", ->
 			initilizeSpy.should.have.been.calledOnce
 			initilizeSpy.restore()
 
-		it "should bind to the global \"startTimer\" event", ->
-			testEventBinding "onStartTimer", "startTimer"
-
-		it "should bind to the global \"stopTimer\" event", ->
-			testEventBinding "onStopTimer", "stopTimer"
-
-		it "should bind to the global \"changeSpeed\" event", ->
-			testEventBinding "onChangeSpeed", "changeSpeed"
-
 	describe "Timer Controls", ->
 
 		it "should start a timer if there's none present", ->
 			@ticker = new Application.Ticker()
 			should.not.exist @ticker.timer
 
-			@ticker.onStartTimer()
+			@ticker.start()
 			@ticker.timer.should.exist
 
 		it "should trigger global \"tick\" event on the interval callback", (done) ->
@@ -72,34 +52,34 @@ describe "Ticker Component", ->
 
 		it "should trigger the onTick callback every 50 ms (default)", ->
 			onTickSpy = sinon.spy Application.Ticker.prototype, "onTick"
-			@ticker.onStartTimer()
+			@ticker.start()
 			@clock.tick(50)
 			onTickSpy.should.have.been.calledOnce
 			onTickSpy.restore()
 
 		it "should stop the timer if there is one present", ->
 			should.not.exist @ticker.timer
-			@ticker.onStartTimer()
+			@ticker.start()
 			@ticker.timer.should.exist
-			@ticker.onStopTimer()
+			@ticker.stop()
 			should.not.exist @ticker.timer
 
 		it "should change the ticker speed", ->
 			@ticker.tick.should.equal 50
-			@ticker.onChangeSpeed 100
+			@ticker.changeSpeed 100
 			@ticker.tick.should.equal 100
 
 		it "should clear the interval and create a new one when the tick speed changes", ->
 			should.not.exist @ticker.timer
-			@ticker.onStartTimer()
+			@ticker.start()
 
-			onStartTimerSpy = sinon.spy Application.Ticker.prototype, "onStartTimer"
-			onStopTimerSpy = sinon.spy Application.Ticker.prototype, "onStopTimer"
+			startSpy = sinon.spy Application.Ticker.prototype, "start"
+			stopSpy = sinon.spy Application.Ticker.prototype, "stop"
 
-			@ticker.onChangeSpeed 100
+			@ticker.changeSpeed 100
 
-			onStartTimerSpy.should.have.been.calledOnce
-			onStopTimerSpy.should.have.been.calledOnce
+			startSpy.should.have.been.calledOnce
+			stopSpy.should.have.been.calledOnce
 
-			onStartTimerSpy.restore()
-			onStopTimerSpy.restore()
+			startSpy.restore()
+			stopSpy.restore()

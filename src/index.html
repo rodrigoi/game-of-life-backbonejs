@@ -21,7 +21,7 @@
 				<button id="next" class="btn btn-info">Next Generation</button>
 				<button id="clear" class="btn btn-danger">Clear</button>
 			</div>
-			<p>Generation <span id="generationCount" class="badge"></span></p>
+			<p>Generation <span id="generationCounter" class="badge"></span></p>
 			<div class="world clearfix">
 			</div>
 			<form class="form-inline" id="setTickForm">
@@ -35,7 +35,7 @@
 				<button id="save" class="btn btn-info">Save</button>
 				<button id="load" class="btn btn-primary">Load</button>
 				<button id="randomize" class="btn btn-primary">Randomize World</button>
-				<button id="gun" class="btn btn-primary">Gosper's Glider Gun</button>
+				<button id="gun" class="btn btn-primary">Load Gosper's Glider Gun</button>
 			</div>
 		</div>
 		<!-- save modal dialog -->
@@ -113,11 +113,14 @@
 		<!-- views -->
 		<script src="app/views/application.js"></script>
 		<script src="app/views/cell.js"></script>
+		<script src="app/views/generationCounter.js"></script>
 		<script src="app/views/konami.js"></script>
 		<script src="app/views/loadDialog.js"></script>
 		<script src="app/views/saveDialog.js"></script>
 		<script src="app/views/storageItem.js"></script>
 		<script src="app/views/world.js"></script>
+		<!-- demo data -->
+		<script src="app/data/gun.js"></script>
 		<!-- application and execution entry point -->
 		<script src="app/application.js"></script>
 		<script src="app/main.js"></script>
