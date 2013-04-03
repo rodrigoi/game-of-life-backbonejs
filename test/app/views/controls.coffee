@@ -34,14 +34,17 @@ describe "Controls View", ->
 		it "should bind to the click event on the \"save\" element", ->
 			testClickEvent "onSave", "save"
 
-		it "should bind to the click event on the \"save\" element", ->
+		it "should bind to the click event on the \"load\" element", ->
 			testClickEvent "onLoad", "load"
 
-		it "should bind to the click event on the \"save\" element", ->
+		it "should bind to the click event on the \"randomize\" element", ->
 			testClickEvent "onRandomize", "randomize"
 
-		it "should bind to the click event on the \"save\" element", ->
+		it "should bind to the click event on the \"gun\" element", ->
 			testClickEvent "onGun", "gun"
+
+		it "should bind to the click event on the \"bigun\" element", ->
+			testClickEvent "onBiGun", "bigun"
 
 	describe "Render", ->
 		it "should return itself to provide a chainable interface", ->
@@ -52,11 +55,11 @@ describe "Controls View", ->
 		beforeEach ->
 			@view = new Application.ControlsView()
 
-		it "should disable start, next, clear, save, load, randomize and gun ui elements on start", ->
-			@view.setElement "<div><a id=\"start\"></a><a id=\"next\"></a><a id=\"clear\"></a><a id=\"save\"></a><a id=\"load\"></a><a id=\"randomize\"><a id=\"gun\"></a></div>"
+		it "should disable start, next, clear, save, load, randomize, gun and bigun ui elements on start", ->
+			@view.setElement "<div><a id=\"start\"></a><a id=\"next\"></a><a id=\"clear\"></a><a id=\"save\"></a><a id=\"load\"></a><a id=\"randomize\"><a id=\"gun\"></a><a id=\"bigun\"></a></div>"
 			@view.$("a[disabled]").length.should.equal 0
 			@view.onStart()
-			@view.$("a[disabled]").length.should.equal 7
+			@view.$("a[disabled]").length.should.equal 8
 
 		it "should enable stop ui element on start", ->
 			@view.setElement "<div><a id=\"stop\" disabled></a></div>"
@@ -64,9 +67,9 @@ describe "Controls View", ->
 			@view.onStart()
 			@view.$("a[disabled]").length.should.equal 0
 
-		it "should enable start, next, clear, save, load and randomize ui elements on stop", ->
-			@view.setElement "<div><a id=\"start\" disabled></a><a id=\"next\" disabled></a><a id=\"clear\" disabled></a><a id=\"save\" disabled></a><a id=\"load\" disabled></a><a id=\"randomize\" disabled><a id=\"gun\" disabled></a></div>"
-			@view.$("a[disabled]").length.should.equal 7
+		it "should enable start, next, clear, save, load, randomize, gun and bigun ui elements on stop", ->
+			@view.setElement "<div><a id=\"start\" disabled></a><a id=\"next\" disabled></a><a id=\"clear\" disabled></a><a id=\"save\" disabled></a><a id=\"load\" disabled></a><a id=\"randomize\" disabled><a id=\"gun\" disabled></a><a id=\"bigun\" disabled></a></div>"
+			@view.$("a[disabled]").length.should.equal 8
 			@view.onStop()
 			@view.$("a[disabled]").length.should.equal 0
 
@@ -129,3 +132,10 @@ describe "Controls View", ->
 
 			@view.onGun()
 			@view.off "gun"
+
+		it "should trigger the local \"bigun\" event on the bigun event handler", (done) ->
+			@view.on "bigun", ->
+				done()
+
+			@view.onBiGun()
+			@view.off "bigun"

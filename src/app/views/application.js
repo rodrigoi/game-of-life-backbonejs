@@ -81,6 +81,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 			controls.on("konami", this._konami, this);
 			controls.on("gun", this.onGun, this);
+			controls.on("bigun", this.onBiGun, this);
 
 			this.children.push(controls);
 		},
@@ -98,6 +99,10 @@ if (typeof module !== "undefined" && module.exports) {
 		onGun: function(){
 			var worldView = this.children[1] || {};
 			this.storage.updateWorldFromSavedData(worldView.collection, Application.Data.Gun);
+		},
+		onBiGun: function(){
+			var worldView = this.children[1] || {};
+			this.storage.updateWorldFromSavedData(worldView.collection, Application.Data.BiGun);
 		},
 		_konami: function(){
 			var konami = new Application.Konami();

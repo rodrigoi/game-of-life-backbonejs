@@ -29,4 +29,6 @@ on the root folder. That will run the mocha command line runner using the mocha.
 
 ![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/load.png)
 
+![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/mocha.png)
+
 Have fun, and enjoy your burrito ;)

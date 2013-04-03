@@ -19,18 +19,19 @@ if (typeof module !== "undefined" && module.exports) {
 			"click #save": "onSave",
 			"click #load": "onLoad",
 			"click #randomize": "onRandomize",
-			"click #gun": "onGun"
+			"click #gun": "onGun",
+			"click #bigun": "onBiGun"
 		},
 		render: function(){
 			return this;
 		},
 		onStart: function(){
-			this.$("#start, #next, #clear, #save, #load, #randomize, #gun").attr("disabled", "disabled");
+			this.$("#start, #next, #clear, #save, #load, #randomize, #gun, #bigun").attr("disabled", "disabled");
 			this.$("#stop").removeAttr("disabled");
 			this.trigger("start");
 		},
 		onStop: function() {
-			this.$("#start, #next, #clear, #save, #load, #randomize, #gun").removeAttr("disabled");
+			this.$("#start, #next, #clear, #save, #load, #randomize, #gun, #bigun").removeAttr("disabled");
 			this.$("#stop").attr("disabled", "disabled");
 			this.trigger("stop");
 		},
@@ -57,6 +58,9 @@ if (typeof module !== "undefined" && module.exports) {
 		},
 		onGun: function(){
 			this.trigger("gun");
+		},
+		onBiGun: function(){
+			this.trigger("bigun");
 		}
 	});
 })();
