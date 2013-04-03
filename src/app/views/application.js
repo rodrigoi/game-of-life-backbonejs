@@ -79,12 +79,9 @@ if (typeof module !== "undefined" && module.exports) {
 		initializeControls: function(options){
 			var controls = new Application.ControlsView();
 
-			controls.on("start", function(){ this.trigger("start"); }, this);
-			controls.on("stop", function(){ this.trigger("stop"); }, this);
-			controls.on("clear", function(){ this.trigger("clear"); }, this);
-			controls.on("save", function(){ this.trigger("save"); }, this);
-			controls.on("load", function(){ this.trigger("load"); }, this);
-			controls.on("randomize", function(){ this.trigger("randomize"); }, this);
+			_.each(["start", "stop", "clear", "save", "load", "randomize"], function(event){
+				controls.on(event, function(){ this.trigger(event); }, this);
+			}, this);
 
 			controls.on("konami", this._konami, this);
 			controls.on("gun", this.onGun, this);
@@ -111,5 +108,4 @@ if (typeof module !== "undefined" && module.exports) {
 			konami.render();
 		}
 	});
-
 })();

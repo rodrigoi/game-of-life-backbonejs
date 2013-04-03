@@ -16,12 +16,12 @@ var Application = Application || {};
 			"click #gun": "onGun"
 		},
 		onStart: function(){
-			this.$("#start, #next, #clear, #save, #load, #randomize").attr("disabled", "disabled");
+			this.$("#start, #next, #clear, #save, #load, #randomize, #gun").attr("disabled", "disabled");
 			this.$("#stop").removeAttr("disabled");
 			this.trigger("start");
 		},
 		onStop: function() {
-			this.$("#start, #next, #clear, #save, #load, #randomize").removeAttr("disabled");
+			this.$("#start, #next, #clear, #save, #load, #randomize, #gun").removeAttr("disabled");
 			this.$("#stop").attr("disabled", "disabled");
 			this.trigger("stop");
 		},
