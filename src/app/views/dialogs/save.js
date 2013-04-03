@@ -9,20 +9,12 @@ if (typeof module !== "undefined" && module.exports) {
 (function(){
 	"use strict";
 
-	Application.SaveDialogView = Backbone.View.extend({
+	Application.SaveDialogView = Application.Dialog.extend({
 		el: "#saveDialog",
-		world: null,
-		storage: null,
 		json: "",
 		events: {
 			"click #download": "onDownload",
 			"click #saveToLocalStorage": "onSaveToLocalStorage"
-		},
-		initialize: function(options){
-			options || (options = {});
-
-			if (options.world) this.world = options.world;
-			if (options.storage) this.storage = options.storage;
 		},
 		render: function(){
 			this.json = this.storage.createJSONItem(this.world);
@@ -37,7 +29,7 @@ if (typeof module !== "undefined" && module.exports) {
 		onSaveToLocalStorage: function(){
 			var patternName = this.$("input[type=text]").val();
 
-			this.storage.addJson(this.json, patternName);
+			this.storage.addByJson(patternName, this.json);
 
 			this.$("input[type=text]").val("");
 			this.$el.modal("hide");

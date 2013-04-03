@@ -57,6 +57,11 @@ if (typeof module !== "undefined" && module.exports) {
 				return neighbour ? neighbour.get("alive") : false;
 			}, this);
 			return livingNeighbours.length;
+		},
+		clear: function(){
+			this.each(function(cell){
+				cell.set("alive", false);
+			}, this);
 		}
 	});
 

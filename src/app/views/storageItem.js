@@ -30,7 +30,6 @@ if (typeof module !== "undefined" && module.exports) {
 			this.trigger("loadStorageItem", this.model);
 		},
 		onRemove: function(){
-			this.model.destroy();
 			this.trigger("removeStorageItem", this.model);
 		}
 	});

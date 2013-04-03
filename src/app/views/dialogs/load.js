@@ -9,9 +9,8 @@ if (typeof module !== "undefined" && module.exports) {
 (function(){
 	"use strict";
 
-	Application.LoadDialogView = Backbone.View.extend({
+	Application.LoadDialogView = Application.Dialog.extend({
 		el: "#loadDialog",
-		worldCollection: null,
 		events: {
 			"dragenter div.well": "onDragEnter",
 			"dragover div.well": "onDragOver",
@@ -19,8 +18,9 @@ if (typeof module !== "undefined" && module.exports) {
 			"drop div.well": "onDrop",
 			"click #upload": "onUpload"
 		},
-		initialize: function(options){
-			options || (options = {});
+		initialize: function(options) {
+			Application.Dialog.prototype.initialize.apply(this, arguments);
+			if(this.collection) this.collection.on("remove", this.render, this);
 		},
 		render: function(){
 			this.$("table tbody").empty();
@@ -30,6 +30,10 @@ if (typeof module !== "undefined" && module.exports) {
 				itemView.on("loadStorageItem", function(storageItem){
 					this._loadFromString(storageItem.get("value"));
 					this.$el.modal("hide");
+				}, this);
+
+				itemView.on("removeStorageItem", function(storageItem){
+					this.storage.remove(storageItem);
 				}, this);
 
 				this.$("table tbody").append(itemView.render().el);
@@ -71,20 +75,7 @@ if (typeof module !== "undefined" && module.exports) {
 			this.$el.modal("hide");
 		},
 		_loadFromString: function(jsonWorld){
-			var savedData = JSON.parse(jsonWorld);
-			var newWorld = new Application.World(savedData.world);
-
-			for(var i = 0; i < newWorld.length; i++){
-				var newCell = newWorld.at(i);
-
-				var cell = this.worldCollection.at(
-					newCell.get("x") + newCell.get("y") * savedData.width
-				);
-
-				if(!cell.get("alive")){
-					cell.set("alive", true);
-				}
-			}
+			this.storage.updateWorldFromJSON(this.world, jsonWorld);
 		}
 	});
 })();

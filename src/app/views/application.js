@@ -75,12 +75,13 @@ if (typeof module !== "undefined" && module.exports) {
 			saveView.listenTo(this, "save", saveView.render);
 
 			var loadView = new Application.LoadDialogView({
-				collection: this.storage.storageItems()
+				collection: this.storage.items,
+				world: worldView.collection,
+				storage: this.storage
 			});
 			loadView.worldCollection = worldView.collection;
 			loadView.listenTo(this, "load", loadView.render)
 			this.dialogs.push(loadView);
-
 		},
 		render: function(){
 			_.each(this.children, function(child){
@@ -125,7 +126,8 @@ if (typeof module !== "undefined" && module.exports) {
 			this.trigger("randomize");
 		},
 		onGun: function(){
-			console.log(Application.Data.Gun.world);
+			var worldView = this.children[1] || {};
+			this.storage.updateWorldFromSavedData(worldView.collection, Application.Data.Gun);
 		},
 		_konami: function(){
 			var konami = new Application.Konami();

@@ -44,9 +44,7 @@ if (typeof module !== "undefined" && module.exports) {
 			Backbone.trigger("regenerate");
 		},
 		clear: function(){
-			this.collection.each(function(cell){
-				cell.set("alive", false);
-			}, this);
+			this.collection.clear();
 		},
 		randomize: function(){
 			this.collection.randomize();
