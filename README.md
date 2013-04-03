@@ -7,10 +7,6 @@ This folder contains the Backbone.JS implementation of Conway's Game of Life. If
 
 The application just needs a server for demonstration purposes. Any server capable of serving status files should do. For development purposes, a simple node.js server is provided.
 
-### Why Backbone.JS?
-
-Why not?
-
 ### Setup
 
 Once you have the repository cloned in your computer, you should browse to this folder (dojo/Conways-Game-of-Life/JavaScript/BackboneJS)
@@ -98,7 +94,28 @@ As any other exercise, you have to set goals to accomplish. Here are mine:
 - Use just Backbone.Events. Implementing a custom event dispatcher is out of the scope of the exercise.
 
 #### The Configuration
+
+The configuration of the development environment is really simple. The package.json contains all the dev dependencies to make the src/app scripts run inside mocha's node.js test runner. It also contains the start and test scripts that can be used to run the development server and the test runner.
+
+component.json is the file that bower will use to download all the vendor scripts and place them into src/vendor. That location is specified inside the .bowerrc file.
+
+The .editorconfig file contains the editor configurations, for editors that supports the [editorconfig.org](http://editorconfig.org) standard.
+
+server.js is a really simple express server to serve the src folder.
+
+The docs folder contains some images of the application, src the source code and test the tests. Inside the test folder, theres a mocha.opts file with the parameters for the mocha test runner.
+
+And this file you're reading is README.md ;)
+
+The .gitignore file is located two levels down, on the dojo folder. Be careful with that :)
+
+
 #### The Dependencies
+
+The front end uses [Backbone.js](http://backbonejs.org/), [Bootstrap](http://twitter.github.com/bootstrap/), [Modernizr](http://modernizr.com/) and [Underscore.JS](http://underscorejs.org/). It also uses the [FileServer.js](https://github.com/eligrey/FileSaver.js) dependency to manipulate blobs for file download.
+
+To run the tests and the code on node, we need [CoffeeScript](http://coffeescript.org/), [Mocha](http://visionmedia.github.com/mocha/) as the test runner, [Chai](http://chaijs.com/) for assertions, [Sinon.JS](http://sinonjs.org/) for stubs, spies and mock objects. Also, the [Sinon-Chai](http://chaijs.com/plugins/sinon-chai) assertion library will come handy. [Node Inspector](https://github.com/dannycoates/node-inspector) for debugging, [Node LocalStorage](https://github.com/lmaccherone/node-localstorage) as a drop in replacement for the browser's local storage. Also, we need the node packages for jQuery, Backbone and Underscore. Oh, and [express](http://expressjs.com/) to run the demo server.
+
 #### The Backbone.JS Application
 
 As we said earlier, this is a BackboneJS application, but since it's a really simple user interface, the solution is implemented without using controllers or routes.
@@ -199,15 +216,26 @@ Event handlers are in place in the Application View to trigger the randomize and
 
 ###### Generation Counter and Controls
 
+The Generations Counter and the Controls view are the most simplest things possible. They are just standard Backbone.View objects. In the case of the generations counter, it's listening to the "tick" event to update the counter it's keeping track of. It can receive a clear message to reset the counter to zero.
 
+The Controls view dispatches the UI events of both toolbars. Those events are used by the Application view to load information into the world, or bubbled to the application class can manipulate the ticker component.
 
-###### Storage Items, Load and Save Dialogs
+###### Storage Items, Save and Load Dialogs
+
+The storage item view is used by the load dialog to show the user all the patterns stored on the browser local storage. It has a very simple template for a table row, with dynamic value for the patter name. It binds to the click event of two buttons, one that loads the items and another one that removes them. The view dispatches two events, because the processing of those actions takes place on the load view.
+
+The save dialog window is created by the application view, and has a reference to the world collection and the storage object. It has two event handlers for the click events of the download and save button. The download button uses html5 file api to trigger a download, while the save pattern button uses the local storage component to save the pattern under the specified name.
+
+The load dialog is created by the application view and has a bit more code than the save dialog. For starters, it has a more complex render method that keeps track of the changes in the localStorage items of the local storage component.
+It also has to bind itself to the event of the storage item view. It uses the html5 file api to load dropped files, and binds to the special drag events.
+
+Both dialogs use the Bootstrap "Modal" jQuery plugin.
 
 ##### The Tests
 
 ### Retrospective
 
-Being this my first attempt to use mocha as the test runner for javascript applications intended to run n the browser, there are some…
+Being this my first attempt to use mocha as the test runner for javascript applications intended to run in the browser, there are some…
 
 #### Lessons Learned
 
@@ -217,6 +245,8 @@ Being this my first attempt to use mocha as the test runner for javascript appli
 - It you have to require to many files to make it run in the node.js runner, that's a good sign that the module may be doing more than it should be doing. The shorter the list, the better.
 - Backbone sucks at dependency injection.
 
+and...
+
 #### Things to improve
 
 - Implement the solution using an AMD. BackboneJS + RequireJS maybe? Testing will be interesting.
@@ -224,6 +254,7 @@ Being this my first attempt to use mocha as the test runner for javascript appli
 - The grid is held in place by css, modify the world view to create proper rows.
 - Split the localStorage component into two. Local Storage and World utilities.
 - Implement ZombieJS tests in mocha.
+- Form Validation/Model Binding?
 
 ## Extras
 
