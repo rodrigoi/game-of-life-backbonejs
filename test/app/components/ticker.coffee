@@ -30,10 +30,10 @@ describe "Ticker Component", ->
 	describe "Initialize", ->
 
 		it "should call the base class initialize method", ->
-			initilizeSpy = sinon.spy Backbone.Component.prototype, "initialize"
+			initilizeStub = sinon.stub Backbone.Component.prototype, "initialize"
 			@ticker = new Application.Ticker()
-			initilizeSpy.should.have.been.calledOnce
-			initilizeSpy.restore()
+			initilizeStub.should.have.been.calledOnce
+			initilizeStub.restore()
 
 	describe "Timer Controls", ->
 
@@ -73,13 +73,13 @@ describe "Ticker Component", ->
 			should.not.exist @ticker.timer
 			@ticker.start()
 
-			startSpy = sinon.spy Application.Ticker.prototype, "start"
-			stopSpy = sinon.spy Application.Ticker.prototype, "stop"
+			startStub = sinon.stub Application.Ticker.prototype, "start"
+			stopStub = sinon.stub Application.Ticker.prototype, "stop"
 
 			@ticker.changeSpeed 100
 
-			startSpy.should.have.been.calledOnce
-			stopSpy.should.have.been.calledOnce
+			startStub.should.have.been.calledOnce
+			stopStub.should.have.been.calledOnce
 
-			startSpy.restore()
-			stopSpy.restore()
+			startStub.restore()
+			stopStub.restore()

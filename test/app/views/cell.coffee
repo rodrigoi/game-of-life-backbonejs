@@ -15,15 +15,15 @@ describe "Cell View", ->
 		cell = new Application.Cell
 			alive: false
 
-		onClickSpy = sinon.spy Application.CellView.prototype, "onClick"
+		onClickStub = sinon.stub Application.CellView.prototype, "onClick"
 		@cellView = new Application.CellView
 			model: cell
 
 		@cellView.render()
 		@cellView.$el.click()
 
-		onClickSpy.should.have.been.calledOnce
-		onClickSpy.restore()
+		onClickStub.should.have.been.calledOnce
+		onClickStub.restore()
 
 	it "should bind itself to the model's change event for the alive property only", ->
 		cell = new Application.Cell

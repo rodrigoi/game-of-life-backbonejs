@@ -47,10 +47,10 @@ describe "World", ->
 			world = new Application.World null,
 				width: 10, height: 10 #large enough sample
 
-			randomSpy = sinon.spy Math, "random"
+			randomStub = sinon.stub Math, "random"
 			world.randomize()
-			randomSpy.restore()
-			randomSpy.callCount.should.equal 10 * 10
+			randomStub.restore()
+			randomStub.callCount.should.equal 10 * 10
 
 	describe "Clean", ->
 		it "should set kill all living cells", ->

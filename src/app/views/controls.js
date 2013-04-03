@@ -21,6 +21,9 @@ if (typeof module !== "undefined" && module.exports) {
 			"click #randomize": "onRandomize",
 			"click #gun": "onGun"
 		},
+		render: function(){
+			return this;
+		},
 		onStart: function(){
 			this.$("#start, #next, #clear, #save, #load, #randomize, #gun").attr("disabled", "disabled");
 			this.$("#stop").removeAttr("disabled");

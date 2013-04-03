@@ -98,12 +98,12 @@ describe "Cell", ->
 		@cell.get("alive").should.not.be.ok
 
 	it "should bind to the regenerate event to change it's internal status", ->
-		regenerateSpy = sinon.spy Application.Cell.prototype, "regenerate"
+		regenerateStub = sinon.stub Application.Cell.prototype, "regenerate"
 		@cell = new Application.Cell()
 
 		Backbone.trigger "regenerate"
 		Backbone.off "regenerate"
 
-		regenerateSpy.should.have.been.calledOnce
+		regenerateStub.should.have.been.calledOnce
 
-		regenerateSpy.restore()
+		regenerateStub.restore()

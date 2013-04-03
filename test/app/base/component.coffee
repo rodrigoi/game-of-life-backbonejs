@@ -8,10 +8,10 @@ Backbone = require "../../../src/app/base/component"
 
 describe "Base Component Class", ->
 	it "should call initialize in the contructor class", ->
-		initializeSpy = sinon.spy Backbone.Component.prototype, "initialize"
+		initializeStub = sinon.stub Backbone.Component.prototype, "initialize"
 		baseComponent = new Backbone.Component();
-		initializeSpy.should.have.been.calledOnce
-		initializeSpy.restore()
+		initializeStub.should.have.been.calledOnce
+		initializeStub.restore()
 
 	it "should provide a chainable initialize method", ->
 		baseComponent = new Backbone.Component();
