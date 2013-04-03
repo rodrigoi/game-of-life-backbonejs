@@ -4,12 +4,23 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-#Math = require "math"
-
-#console.log Math.random
 Application = require "../../../src/app/collections/world"
 
 Application.use Math
+
+shouldIgnoreCells = (world, cell, indexes) ->
+	world.liveNeighbours(cell).should.equal 0
+	for index in indexes
+		world.at(index).set "alive", true
+		world.liveNeighbours(cell).should.equal 0
+	return
+
+shouldCountLivingCells = (world, cell, patterns) ->
+	world.liveNeighbours(cell).should.equal 0
+	for pattern in patterns
+		world.at(pattern[0]).set "alive", true
+		world.liveNeighbours(cell).should.equal pattern[1]
+	return
 
 describe "World", ->
 
@@ -40,6 +51,23 @@ describe "World", ->
 			world.randomize()
 			randomSpy.restore()
 			randomSpy.callCount.should.equal 10 * 10
+
+	describe "Clean", ->
+		it "should set kill all living cells", ->
+			world = new Application.World [
+				{ x: 0, y: 0, alive: true } #cell at 0
+				{ x: 1, y: 0, alive: true } #cell at 1
+			], width: 2, height: 1
+
+			world.where(
+				alive: true
+			).should.have.length 2
+
+			world.clear()
+
+			world.where(
+				alive: true
+			).should.have.length 0
 
 	describe "Single cell world", ->
 
@@ -90,55 +118,35 @@ describe "World", ->
 
 		it "should correcly count living neighbours for the top left cell", ->
 			cell = @world.at 0
-			@world.liveNeighbours(cell).should.equal 0
-
-			@world.at(1).set "alive", true
-			@world.liveNeighbours(cell).should.equal 1
-
-			@world.at(2).set "alive", true
-			@world.liveNeighbours(cell).should.equal 2
-
-			@world.at(3).set "alive", true
-			@world.liveNeighbours(cell).should.equal 3
+			shouldCountLivingCells @world, cell, [
+				[1, 1]
+				[2, 2]
+				[3, 3]
+			]
 
 		it "should correcly count living neighbours for the top right cell", ->
 			cell = @world.at 1
-			@world.liveNeighbours(cell).should.equal 0
-
-			@world.at(0).set "alive", true
-			@world.liveNeighbours(cell).should.equal 1
-
-			@world.at(2).set "alive", true
-			@world.liveNeighbours(cell).should.equal 2
-
-			@world.at(3).set "alive", true
-			@world.liveNeighbours(cell).should.equal 3
+			shouldCountLivingCells @world, cell, [
+				[0, 1]
+				[2, 2]
+				[3, 3]
+			]
 
 		it "should correcly count living neighbours for the bottom left cell", ->
 			cell = @world.at 2
-			@world.liveNeighbours(cell).should.equal 0
-
-			@world.at(0).set "alive", true
-			@world.liveNeighbours(cell).should.equal 1
-
-			@world.at(1).set "alive", true
-			@world.liveNeighbours(cell).should.equal 2
-
-			@world.at(3).set "alive", true
-			@world.liveNeighbours(cell).should.equal 3
+			shouldCountLivingCells @world, cell, [
+				[0, 1]
+				[1, 2]
+				[3, 3]
+			]
 
 		it "should correcly count living neighbours for the bottom right cell", ->
 			cell = @world.at 3
-			@world.liveNeighbours(cell).should.equal 0
-
-			@world.at(0).set "alive", true
-			@world.liveNeighbours(cell).should.equal 1
-
-			@world.at(1).set "alive", true
-			@world.liveNeighbours(cell).should.equal 2
-
-			@world.at(2).set "alive", true
-			@world.liveNeighbours(cell).should.equal 3
+			shouldCountLivingCells @world, cell, [
+				[0, 1]
+				[1, 2]
+				[2, 3]
+			]
 
 	describe "World with a 3 by 3 grid", ->
 		beforeEach ->
@@ -160,292 +168,125 @@ describe "World", ->
 
 			it "should correcly count living neighbours for the center cell", ->
 				cell = @world.at 4
-				@world.liveNeighbours(cell).should.equal 0
-
-				@world.at(0).set "alive", true
-				@world.liveNeighbours(cell).should.equal 1
-
-				@world.at(1).set "alive", true
-				@world.liveNeighbours(cell).should.equal 2
-
-				@world.at(2).set "alive", true
-				@world.liveNeighbours(cell).should.equal 3
-
-				@world.at(3).set "alive", true
-				@world.liveNeighbours(cell).should.equal 4
-
-				@world.at(5).set "alive", true
-				@world.liveNeighbours(cell).should.equal 5
-
-				@world.at(6).set "alive", true
-				@world.liveNeighbours(cell).should.equal 6
-
-				@world.at(7).set "alive", true
-				@world.liveNeighbours(cell).should.equal 7
-
-				@world.at(8).set "alive", true
-				@world.liveNeighbours(cell).should.equal 8
+				shouldCountLivingCells @world, cell, [
+					[0, 1]
+					[1, 2]
+					[2, 3]
+					[3, 4]
+					[5, 5]
+					[6, 6]
+					[7, 7]
+					[8, 8]
+				]
 
 		describe "Neighbours for the top left corner", ->
 			beforeEach -> @cell = @world.at 0
 
 			it "should correcly count adjacent live cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(1).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 1
-
-				@world.at(3).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 2
-
-				@world.at(4).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 3
+				shouldCountLivingCells @world, @cell, [
+					[1, 1]
+					[3, 2]
+					[4, 3]
+				]
 
 			it "should ignore not adjacent cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(2).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(5).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(6).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(7).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(8).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
+				shouldIgnoreCells @world, @cell, [2, 5, 6, 7, 8]
 
 		describe "Neighbours for the top center corner", ->
 			beforeEach -> @cell = @world.at 1
 
 			it "should correcly count adjacent live cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(0).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 1
-
-				@world.at(2).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 2
-
-				@world.at(3).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 3
-
-				@world.at(4).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 4
-
-				@world.at(5).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 5
+				shouldCountLivingCells @world, @cell, [
+					[0, 1]
+					[2, 2]
+					[3, 3]
+					[4, 4]
+					[5, 5]
+				]
 
 			it "should ignore not adjacent cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(6).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(7).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(8).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
+				shouldIgnoreCells @world, @cell, [6, 7, 8]
 
 		describe "Neighbours for the top right corner", ->
 			beforeEach -> @cell = @world.at 2
 
 			it "should correcly count adjacent live cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(1).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 1
-
-				@world.at(4).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 2
-
-				@world.at(5).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 3
+				shouldCountLivingCells @world, @cell, [
+					[1, 1]
+					[4, 2]
+					[5, 3]
+				]
 
 			it "should ignore not adjacent cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(0).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(3).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(6).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(7).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(8).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
+				shouldIgnoreCells @world, @cell, [0, 3, 6, 7, 8]
 
 		describe "Neighbours for the center left", ->
 			beforeEach -> @cell = @world.at 3
 
 			it "should correcly count adjacent live cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(0).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 1
-
-				@world.at(1).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 2
-
-				@world.at(4).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 3
-
-				@world.at(6).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 4
-
-				@world.at(7).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 5
+				shouldCountLivingCells @world, @cell, [
+					[0, 1]
+					[1, 2]
+					[4, 3]
+					[6, 4]
+					[7, 5]
+				]
 
 			it "should ignore not adjacent cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(2).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(5).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(8).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
+				shouldIgnoreCells @world, @cell, [2, 5, 8]
 
 		describe "Neighbours for the center right", ->
 			beforeEach -> @cell = @world.at 5
 
 			it "should correcly count adjacent live cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(1).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 1
-
-				@world.at(2).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 2
-
-				@world.at(4).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 3
-
-				@world.at(7).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 4
-
-				@world.at(8).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 5
+				shouldCountLivingCells @world, @cell, [
+					[1, 1]
+					[2, 2]
+					[4, 3]
+					[7, 4]
+					[8, 5]
+				]
 
 			it "should ignore not adjacent cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(0).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(3).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(6).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
+				shouldIgnoreCells @world, @cell, [0, 3, 6]
 
 		describe "Neighbours for the bottom left corner", ->
 			beforeEach -> @cell = @world.at 6
 
 			it "should correcly count adjacent live cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(3).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 1
-
-				@world.at(4).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 2
-
-				@world.at(7).set "alive", true
-				@world.liveNeighbours(@cell).should.equal
+				shouldCountLivingCells @world, @cell, [
+					[3, 1]
+					[4, 2]
+					[7, 3]
+				]
 
 			it "should ignore not adjacent cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(0).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(1).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(2).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(5).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(8).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
+				shouldIgnoreCells @world, @cell, [0, 1, 2, 5, 8]
 
 		describe "Neighbours for the bottom center", ->
 			beforeEach -> @cell = @world.at 7
 
 			it "should correcly count adjacent live cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(3).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 1
-
-				@world.at(4).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 2
-
-				@world.at(5).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 3
-
-				@world.at(6).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 4
-
-				@world.at(8).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 5
+				shouldCountLivingCells @world, @cell, [
+					[3, 1]
+					[4, 2]
+					[5, 3]
+					[6, 4]
+					[8, 5]
+				]
 
 			it "should ignore not adjacent cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(0).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(1).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(2).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
+				shouldIgnoreCells @world, @cell, [0, 1, 2]
 
 		describe "Neighbours for the bottom right corner", ->
 			beforeEach -> @cell = @world.at 8
 
 			it "should correcly count adjacent live cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(4).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 1
-
-				@world.at(5).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 2
-
-				@world.at(7).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 3
+				shouldCountLivingCells @world, @cell, [
+					[4, 1]
+					[5, 2]
+					[7, 3]
+				]
 
 			it "should ignore not adjacent cells", ->
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(0).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(1).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(2).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(3).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
-
-				@world.at(6).set "alive", true
-				@world.liveNeighbours(@cell).should.equal 0
+				shouldIgnoreCells @world, @cell, [0, 1, 2, 3, 6]
