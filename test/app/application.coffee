@@ -4,7 +4,10 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
+LocalStorage = require("node-localstorage").LocalStorage;
+
 Application = require "../../src/app/application"
+Application.useLocalStorage = new LocalStorage "./scratch"
 
 describe "Application", ->
 	it "should exist as a variable for the Namespace", ->
@@ -35,5 +38,3 @@ describe "Application", ->
 
 		it "should initialize the storage object", ->
 			Application.storage.should.exist
-
-		it "should create an application view"

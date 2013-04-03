@@ -1,9 +1,12 @@
 var Application = Application || {};
 
 if (typeof module !== "undefined" && module.exports) {
+	var _ = _ || require("underscore");
 	var Backbone = Backbone || require("backbone");
 
 	Application = require("../../base/dialog");
+	_.extend(Application, require("../../components/localStorage"));
+	Application.use(Backbone)
 
 	module.exports = Application;
 }
@@ -31,9 +34,7 @@ if (typeof module !== "undefined" && module.exports) {
 		},
 		onSaveToLocalStorage: function(){
 			var patternName = this.$("input[type=text]").val();
-
 			this.storage.addByJson(patternName, this.json);
-
 			this.$("input[type=text]").val("");
 			this.$el.modal("hide");
 		}

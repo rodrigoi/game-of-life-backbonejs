@@ -28,7 +28,6 @@ describe "Ticker Component", ->
 			should.not.exist @ticker.timer
 
 	describe "Initialize", ->
-
 		it "should call the base class initialize method", ->
 			initilizeStub = sinon.stub Backbone.Component.prototype, "initialize"
 			@ticker = new Application.Ticker()
@@ -36,7 +35,6 @@ describe "Ticker Component", ->
 			initilizeStub.restore()
 
 	describe "Timer Controls", ->
-
 		it "should start a timer if there's none present", ->
 			@ticker = new Application.Ticker()
 			should.not.exist @ticker.timer

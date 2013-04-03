@@ -10,14 +10,10 @@ Application = require "../../../src/app/views/controls"
 
 testClickEvent = (method, element) ->
 	stub = sinon.stub Application.ControlsView.prototype, method
-
 	view = new Application.ControlsView()
-
 	view.setElement "<div><a id=\"#{element}\"></a></div>"
 	view.$("##{element}").click()
-
 	stub.should.have.been.calledOnce
-
 	stub.restore()
 	return
 

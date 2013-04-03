@@ -4,13 +4,16 @@ if (typeof module !== "undefined" && module.exports) {
 	var _ = _ || require("underscore");
 	var Backbone = Backbone || require("backbone");
 
-	Application = require("../collections/storage");
+	_.extend(Application, require("../models/storageItem"));
+	_.extend(Application, require("../collections/world"));
+	_.extend(Application, require("../collections/storage"));
 
 	module.exports = Application
-
 	module.exports.use = function(Backbone){
 		Backbone = Backbone
 	}
+
+	var localStorage = null;
 }
 
 (function(){
@@ -18,16 +21,22 @@ if (typeof module !== "undefined" && module.exports) {
 
 	Application.LocalStorage = Backbone.Component.extend({
 		items: null,
-		initialize: function(){
+		initialize: function(options){
+			options || (options = {});
+
+			if (options.localStorage) localStorage = options.localStorage
+
 			Backbone.Component.prototype.initialize.apply(this, arguments);
 
 			this.items = new Application.Storage();
-			for (var i = 0, len = localStorage.length; i < len; i++){
-				this.items.add(new Application.StorageItem({
-					index: i,
-					key: localStorage.key(i),
-					value: localStorage.getItem(localStorage.key(i))
-				}));
+			if(localStorage) {
+				for (var i = 0, len = localStorage.length; i < len; i++){
+					this.items.add(new Application.StorageItem({
+						index: i,
+						key: localStorage.key(i),
+						value: localStorage.getItem(localStorage.key(i))
+					}));
+				}
 			}
 		},
 		storageItems: function(){
@@ -41,7 +50,11 @@ if (typeof module !== "undefined" && module.exports) {
 			}))
 		},
 		addByWorld: function(name, world){
-			this.addByJson(this.createJSONItem(world), name);
+			this.addByJson(name, this.createJSONItem(world));
+		},
+		remove: function(item){
+			localStorage.removeItem(item.get("key"));
+			this.items.remove(item);
 		},
 		createJSONItem: function(world) {
 			if(world){
@@ -58,9 +71,9 @@ if (typeof module !== "undefined" && module.exports) {
 				});
 			}
 		},
-		remove: function(item){
-			localStorage.removeItem(item.get("key"));
-			this.items.remove(item);
+		updateWorldFromJSON: function(world, json){
+			var savedData = JSON.parse(json);
+			this.updateWorldFromSavedData(world, savedData);
 		},
 		updateWorldFromSavedData: function(world, savedData){
 			world.clear();
@@ -71,10 +84,6 @@ if (typeof module !== "undefined" && module.exports) {
 					cell.set("alive", true);
 				}
 			});
-		},
-		updateWorldFromJSON: function(world, json){
-			var savedData = JSON.parse(json);
-			this.updateWorldFromSavedData(world, savedData);
 		}
 	});
 })();

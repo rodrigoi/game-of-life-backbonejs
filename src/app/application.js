@@ -5,8 +5,10 @@ if (typeof module !== "undefined" && module.exports) {
 
 	//the shorter the list of dependencies, the better
 	Backbone = require("./base/component");
+
 	_.extend(Application, require("./components/ticker"));
 	Application.use(Backbone);
+
 	_.extend(Application, require("./components/localStorage"));
 	Application.use(Backbone);
 	_.extend(Application, require("./views/application"));
