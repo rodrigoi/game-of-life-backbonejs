@@ -10,8 +10,9 @@ if (typeof module !== "undefined" && module.exports) {
 
 	_.extend(Application, require("./generationCounter"));
 	_.extend(Application, require("./world"));
-	_.extend(Application, require("./saveDialog"));
-	_.extend(Application, require("./loadDialog"));
+	_.extend(Application, require("./controls"));
+	_.extend(Application, require("./dialogs/save"));
+	_.extend(Application, require("./dialogs/load"));
 
 	module.exports = Application;
 

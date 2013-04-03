@@ -46,17 +46,17 @@ describe "Application View", ->
 		removeListeners @applicationView
 
 	describe "Event Handlers", ->
-		it "should bind to the click event on the \"start\" element", ->
-			testClickEvent "onStart", "start"
+		#it "should bind to the click event on the \"start\" element", ->
+		#	testClickEvent "onStart", "start"
 
-		it "should bind to the click event on the \"stop\" element", ->
-			testClickEvent "onStop", "stop"
+		#it "should bind to the click event on the \"stop\" element", ->
+		#	testClickEvent "onStop", "stop"
 
-		it "should bind to the click event on the \"next\" element", ->
-			testClickEvent "onNext", "next"
+		#it "should bind to the click event on the \"next\" element", ->
+		#	testClickEvent "onNext", "next"
 
-		it "should bind to the click event on the \"clear\" element", ->
-			testClickEvent "onClear", "clear"
+		#it "should bind to the click event on the \"clear\" element", ->
+		#	testClickEvent "onClear", "clear"
 
 		it "should bind to the submit event on the \"setTick\" element", ->
 			spy = sinon.spy Application.AppView.prototype, "onSetTickFromSubmit"
@@ -69,17 +69,17 @@ describe "Application View", ->
 
 			spy.restore()
 
-		it "should bind to the click event on the \"save\" element", ->
-			testClickEvent "onSave", "save"
+		#it "should bind to the click event on the \"save\" element", ->
+		#	testClickEvent "onSave", "save"
 
-		it "should bind to the click event on the \"load\" element", ->
-			testClickEvent "onLoad", "load"
+		#it "should bind to the click event on the \"load\" element", ->
+		#	testClickEvent "onLoad", "load"
 
-		it "should bind to the click event on the \"randomize\" element", ->
-			testClickEvent "onRandomize", "randomize"
+		#it "should bind to the click event on the \"randomize\" element", ->
+		#	testClickEvent "onRandomize", "randomize"
 
-		it "should bind to the click event on the \"load gun\" element", ->
-			testClickEvent "onGun", "gun"
+		#it "should bind to the click event on the \"load gun\" element", ->
+		#	testClickEvent "onGun", "gun"
 
 	describe "Initialize", ->
 		it "should call the initialize children method", ->
@@ -98,57 +98,57 @@ describe "Application View", ->
 		it "should return itself to provide a chainable interface"
 
 	describe "Start", ->
-		it "should disable start, next, clear, save, load and randomize ui elements on start", ->
-			@applicationView.setElement "<div><a id=\"start\"></a><a id=\"next\"></a><a id=\"clear\"></a><a id=\"save\"></a><a id=\"load\"></a><a id=\"randomize\"></a></div>"
-			@applicationView.$("a[disabled]").length.should.equal 0
-			@applicationView.onStart()
-			@applicationView.$("a[disabled]").length.should.equal 6
+		#it "should disable start, next, clear, save, load and randomize ui elements on start", ->
+		#	@applicationView.setElement "<div><a id=\"start\"></a><a id=\"next\"></a><a id=\"clear\"></a><a id=\"save\"></a><a id=\"load\"></a><a id=\"randomize\"></a></div>"
+		#	@applicationView.$("a[disabled]").length.should.equal 0
+		#	@applicationView.onStart()
+		#	@applicationView.$("a[disabled]").length.should.equal 6
 
-		it "should enable stop ui element on start", ->
-			@applicationView.setElement "<div><a id=\"stop\" disabled></a></div>"
-			@applicationView.$("a[disabled]").length.should.equal 1
-			@applicationView.onStart()
-			@applicationView.$("a[disabled]").length.should.equal 0
+		#it "should enable stop ui element on start", ->
+		#	@applicationView.setElement "<div><a id=\"stop\" disabled></a></div>"
+		#	@applicationView.$("a[disabled]").length.should.equal 1
+		#	@applicationView.onStart()
+		#	@applicationView.$("a[disabled]").length.should.equal 0
 
-		it "should trigger local \"start\" event on start", (done) ->
-			@applicationView.on "start", ->
-				done()
+		#it "should trigger local \"start\" event on start", (done) ->
+		#	@applicationView.on "start", ->
+		#		done()
 
-			@applicationView.onStart()
+		#	@applicationView.onStart()
 
 	describe "Stop", ->
-		it "should enable start, next, clear, save, load and randomize ui elements on stop", ->
-			@applicationView.setElement "<div><a id=\"start\" disabled></a><a id=\"next\" disabled></a><a id=\"clear\" disabled></a><a id=\"save\" disabled></a><a id=\"load\" disabled></a><a id=\"randomize\" disabled></a></div>"
-			@applicationView.$("a[disabled]").length.should.equal 6
-			@applicationView.onStop()
-			@applicationView.$("a[disabled]").length.should.equal 0
+		#it "should enable start, next, clear, save, load and randomize ui elements on stop", ->
+		#	@applicationView.setElement "<div><a id=\"start\" disabled></a><a id=\"next\" disabled></a><a id=\"clear\" disabled></a><a id=\"save\" disabled></a><a id=\"load\" disabled></a><a id=\"randomize\" disabled></a></div>"
+		#	@applicationView.$("a[disabled]").length.should.equal 6
+		#	@applicationView.onStop()
+		#	@applicationView.$("a[disabled]").length.should.equal 0
 
-		it "should disable stop ui element on stop handler", ->
-			@applicationView.setElement "<div><a id=\"stop\"></a></div>"
-			@applicationView.$("a[disabled]").length.should.equal 0
-			@applicationView.onStop()
-			@applicationView.$("a[disabled]").length.should.equal 1
+		#it "should disable stop ui element on stop handler", ->
+		#	@applicationView.setElement "<div><a id=\"stop\"></a></div>"
+		#	@applicationView.$("a[disabled]").length.should.equal 0
+		#	@applicationView.onStop()
+		#	@applicationView.$("a[disabled]").length.should.equal 1
 
-		it "should trigger local \"stopTimer\" event on stop handler", (done) ->
-			@applicationView.on "stop", ->
-				done()
+		#it "should trigger local \"stopTimer\" event on stop handler", (done) ->
+		#	@applicationView.on "stop", ->
+		#		done()
 
-			@applicationView.onStop()
-			@applicationView.off "stop"
+		#	@applicationView.onStop()
+		#	@applicationView.off "stop"
 
 	describe "other UI Events", ->
-		it "should trigger the local \"tick\" event on the next handler", (done) ->
-			Backbone.on "tick", ->
-				done()
-			@applicationView.onNext()
-			Backbone.off "tick"
+		#it "should trigger the global \"tick\" event on the next handler", (done) ->
+		#	Backbone.on "tick", ->
+		#		done()
+		#	@applicationView.onNext()
+		#	Backbone.off "tick"
 
-		describe "Clear", ->
-			it "should trigger the local \"clear\" event", (done) ->
-				@applicationView.on "clear", ->
-					done()
-				@applicationView.onClear()
-				@applicationView.off "clear"
+		#describe "Clear", ->
+		#	it "should trigger the local \"clear\" event", (done) ->
+		#		@applicationView.on "clear", ->
+		#			done()
+		#		@applicationView.onClear()
+		#		@applicationView.off "clear"
 
 		it "should trigger the local \"changeSpeed\" event on the form submit event handler with the new speed", (done) ->
 			@applicationView.setElement "<div><form id=\"setTickForm\"><input id=\"tick\" type=\"text\" value=\"500\"/></form></div>"
@@ -163,23 +163,23 @@ describe "Application View", ->
 		it "should cancel the form submit on the form submit event handler", ->
 			@applicationView.onSetTickFromSubmit().should.not.be.ok
 
-		it "should trigger the local \"save\" event on save handler", (done) ->
-			@applicationView.on "save", ->
-				done()
+		#it "should trigger the local \"save\" event on save handler", (done) ->
+		#	@applicationView.on "save", ->
+		#		done()
 
-			@applicationView.onSave()
-			@applicationView.off "save"
+		#	@applicationView.onSave()
+		#	@applicationView.off "save"
 
-		it "should trigger the local \"load\" event on load handler", (done) ->
-			@applicationView.on "load", ->
-				done()
+		#it "should trigger the local \"load\" event on load handler", (done) ->
+		#	@applicationView.on "load", ->
+		#		done()
 
-			@applicationView.onLoad()
-			@applicationView.off "load"
+		#	@applicationView.onLoad()
+		#	@applicationView.off "load"
 
-		it "should trigger the local \"randomize\" event on randomize handler", (done) ->
-			@applicationView.on "randomize", ->
-				done()
+		#it "should trigger the local \"randomize\" event on randomize handler", (done) ->
+		#	@applicationView.on "randomize", ->
+		#		done()
 
-			@applicationView.onRandomize()
-			@applicationView.off "randomize"
+		#	@applicationView.onRandomize()
+		#	@applicationView.off "randomize"

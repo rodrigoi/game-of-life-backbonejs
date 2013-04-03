@@ -3,6 +3,8 @@ var Application = Application || {};
 if (typeof module !== "undefined" && module.exports) {
 	var Backbone = Backbone || require("backbone");
 
+	Application = require("../../base/dialog");
+
 	module.exports = Application;
 }
 
