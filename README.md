@@ -3,13 +3,19 @@
 ## Backbone.JS Implementation
 
 
-This folder contains the Backbone.JS implementation of Conway's Game of Life. If your editor supports the [editorconfig.org](http://editorconfig.org) standard, take a look ar the .editorconfig file. It's configured to use tabs as indent characters, and to set them two spaces long. Because I fancy that.
+This folder contains the Backbone.JS implementation of Conway's Game of Life. You can check an online version [here](http://rodrigoi.github.com/dojo/Conways-Game-of-Life/BackboneJS/).
 
 The application just needs a server for demonstration purposes. Any server capable of serving status files should do. For development purposes, a simple node.js server is provided.
 
 ### Setup
 
-Once you have the repository cloned in your computer, you should browse to this folder (dojo/Conways-Game-of-Life/JavaScript/BackboneJS)
+Once you have the repository cloned in your computer, you should browse to this folder (dojo/Conways-Game-of-Life/JavaScript/BackboneJS). It should look like this (plus some hidden files)
+
+![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/root.png)
+
+Or like this, if you like the terminal:
+
+![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/root-cli.png)
 
 To run the samples, you need to use [bower](http://twitter.github.com/bower/) to download the components. For that, you need [Node Package Manager](https://npmjs.org/). Run these commands on the root folder:
 
@@ -255,6 +261,7 @@ and...
 - Split the localStorage component into two. Local Storage and World utilities.
 - Implement ZombieJS tests in mocha.
 - Form Validation/Model Binding?
+- Implement a Grunt lint/minify file.
 
 ## Extras
 
