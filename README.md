@@ -7,15 +7,23 @@ This folder contains the Backbone.JS implementation of Conway's Game of Life. Yo
 
 The application just needs a server for demonstration purposes. Any server capable of serving status files should do. For development purposes, a simple node.js server is provided.
 
+### Disclaimer
+
+This code has been tested on modern browsers only. Chrome only… really. Local Storage may not work on Firefox. Other stuff may not work on Internet Explorer older than 9. To be safe, use Chrome :P
+
+Oh, and the test runner won't watch files on Windows. Run on Linux/Mac to be safe.
+
 ### Setup
 
-Once you have the repository cloned in your computer, you should browse to this folder (dojo/Conways-Game-of-Life/JavaScript/BackboneJS). It should look like this (plus some hidden files)
+Once you have the repository cloned in your computer, you should browse to this folder (dojo/Conways-Game-of-Life/JavaScript/BackboneJS). It should look like this (plus some hidden files):
 
 ![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/root.png)
 
 Or like this, if you like the terminal:
 
 ![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/root-cli.png)
+
+That's the root folder for this project. **All scripts should be run from that location**.
 
 To run the samples, you need to use [bower](http://twitter.github.com/bower/) to download the components. For that, you need [Node Package Manager](https://npmjs.org/). Run these commands on the root folder:
 
@@ -24,19 +32,23 @@ To run the samples, you need to use [bower](http://twitter.github.com/bower/) to
 	$ npm start
 
 That will load all the node dependencies for the mocha test runner, and all the bower dependencies for the web application.
-To run the tests, simply run
+To run the tests, simply run:
 
 	$ npm test
 
-on the root folder. That will run the mocha command line runner using the mocha.opts file on the test folder.
+That will run the mocha command line runner using the mocha.opts file on the test folder.
 
 You should see something like this:
 
 ![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/mocha.png)
-	
+
+Isn't that [cute](https://www.youtube.com/watch?v=QH2-TGUlwu4)?
+
 In case you have trouble, try to install mocha, and bower as global packages. To do that, just run
 
 	$ npm install -g bower mocha
+	
+*** do not sudo npm ***. Follow [this guide](http://howtonode.org/introduction-to-npm) if you need to su/sudo to install npm packages.
 
 ### User Interface
 
