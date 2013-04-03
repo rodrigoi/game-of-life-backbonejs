@@ -95,10 +95,11 @@ As any other exercise, you have to set goals to accomplish. Here are mine:
 - Use bower to manage the vendor scripts.
 - Write 100% coffeescript tests.
 - Rely on events to manage the grid state.
+- Use just Backbone.Events. Implementing a custom event dispatcher is out of the scope of the exercise.
 
 #### The Configuration
 #### The Dependencies
-#### BackboneJS
+#### The Backbone.JS Application
 
 As we said earlier, this is a BackboneJS application, but since it's a really simple user interface, the solution is implemented without using controllers or routes.
 
@@ -108,19 +109,100 @@ The solution is implemented around an "Application" namespace.
 
 There are two base class that are implemented into the Backbone namespace, "component" and "dialog".
 
+###### The Base Component
+
 The component class is there to provide other classes the ability to extend themselves and use an initialization method, following the Backbone class pattern. The components use this base class, "localStorage" and "ticker".
+
+###### The Base Dialog
 
 The dialog class is an extension of Backbone.View that holds some boilerplate code shared by both the save and load dialogs. Objects that extend this class should call the base class initialize method to make those defaults effective.
 
 ##### The Application
+
+##### The Global Events
+
+The applications works thanks to two global events. The "tick" event dispatched by the Ticker Component and the "Next Generation" button, and the "regenerate" event dispatched by the world view.
+
+When the Ticker dispatches a "tick" event, a handler in the world view scans the grid asking all the cells if they should be alive by the time the next tick arrives. Once the gris has been scanned, the view triggers the "regenerate" event. The cell model listens to this event, and resets itself to the next state. That triggers the change event on the view, that repaints the cell.
+
+That's how it's done.
+
 ##### The Components
 
-The solution has two components that extend the Backbone.Component class. "localStorage" and "ticker". The local storage component is the one in charge of keeping track of changes in the browser's local storage. Objects are added, removed or retrieved using this object. It's also responsible of creating a json string representation of the games grid, and to update the grid from saved data.
+The solution has two components that extend the Backbone.Component class. "localStorage" and "ticker". 
+
+###### Local Storage Component
+
+The local storage component is the one in charge of keeping track of changes in the browser's local storage. Objects are added, removed or retrieved using this object. It's also responsible of creating a json string representation of the games grid, and to update the grid from saved data.
 
 At first, I've used the backbone.localstorage module, but it proved to be inneficient with the volume of data the application manages. Also, when saving a collection, an entry for every cell was created, making impossible to have more than one pattern stored. A custom implementation saving **only** the living cells. That reduced the size of the grid payload from 66kb to 500bytes for the representation of Gosper's Glider Gun.
 
+###### Ticker Component
+
+The ticker component only purpose in life is to "tick". It's the one responsible for all the time management of the application. Starting, Stoping and changing speed. This component dispatches the global "tick" event that makes the world move.
+
 ##### The Models and Collections
-##### The Views
+
+The solution has two models, and two corresponding collections. One for cells and another for items stored into the browsers local storage.
+
+###### The Cell Model
+
+This is the model that represents one cell. It's a standard backbone model with the exception that it listens to a global "regenerate" event. It has four properties. Location using X and Y coordinates, current living state and future state calculated by the shouldBeAlive method.
+When the application broadcast the "regenerate" event (after a "tick" event), all the cells change their living state to the new value, triggering the "change" model event.
+The core business rules are implemented here. The "shouldBeAlive" method receives a parameter with the count of the neighboring living cells, and sets the future state of the cell according to the rules of the game.
+
+###### The World Collection
+
+The world collections contains a representation of all the cells in the grid. This is the other class responsible for the games rules, because it needs to accurately calculate the number of neighboring living cell for any model it holds.
+When this collection is created, it initialize itself using the width and height provided by the application view. This is important, because there's only one instance of this class across the application, and several views (load, save, world) hold a reference to it to.
+It can randomize the state of the models, and also kill them all using the "clear" method.
+
+But the important part is the "liveNeighbours" method. It uses an array representing the grid surrounding the cell in question, and returns the count of living cells. Here, like this:
+
+![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/grid.PNG)
+
+Using that model, you can request a cell by it's index or by it's location on the grid.
+
+Width and Height of the grid are really important for those calculations ;)
+
+###### The Storage Item Model
+
+The storage item model is just a plain Backbone.Model with a key and value properties. There's really nothing special about this model.
+
+###### The Storage Items Collection
+
+The storage collection is a boring Backbone.Collection. There's nothing special about this collection.
+
+##### The Views and Dialogs
+
+The views in the solution make use of Backbone.View's "el" property to manipulate DOM elements already present on the page. With the exception of the cell view and the storage item view, none of the views uses a dynamic template. They just take advantage of the DOM. For the views that use a template, Underscore.JS template engine is used.
+
+###### The Application View
+
+The application view is responsible for the creation of all other views, and for subscribing to the lifespan form. It creates the generation counter view, the world view, the save and load dialogs and bubbles the events for the main task bar.
+It also loads the demo patterns from a global object into the world view by means of the storage component.
+
+It is responsible for keeping references to the sub views and the storage component.
+
+###### Cell View
+
+The cell view is extremely simple, but without it the application just won't work. It renders a div that represents the cell and bind to the change:alive event of the model. When the model changes for any reason, the cell repaints itself.
+The repaint is really fast because it just changes a style of the default div created using the Views tagName property (not set because the default is ok).
+It also accepts a click event that toggles the related model state, forcing another repaint.
+
+###### World View
+
+The world view is responsible for holding all the cell views in the grid. Besides the standard Backbone.View properties, it needs the width and height properties to be set, preferably using the constructor. If no collection is specified, it initializes an empty collection. That's mostly to make it easier to test.
+
+It listens to the global "tick" event. If that event is dispatched, the view tells every cell to calculate their future state and, when done, triggers the "regenerate" event. That makes all the models to update their status.
+Event handlers are in place in the Application View to trigger the randomize and clear methods upon user interaction.
+
+###### Generation Counter and Controls
+
+
+
+###### Storage Items, Load and Save Dialogs
+
 ##### The Tests
 
 ### Retrospective
@@ -146,8 +228,6 @@ Being this my first attempt to use mocha as the test runner for javascript appli
 ## Extras
 
 If you remember the Konami Code, there's something special behind one of the controls...
-
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/grid.PNG)
 
 ----
 
