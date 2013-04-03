@@ -74,7 +74,7 @@ if (typeof module !== "undefined" && module.exports) {
 		},
 		updateWorldFromJSON: function(world, json){
 			var savedData = JSON.parse(json);
-			this.updateWorldFromSavedData(savedData);
+			this.updateWorldFromSavedData(world, savedData);
 		}
 	});
 })();

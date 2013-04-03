@@ -32,15 +32,7 @@ if (typeof module !== "undefined" && module.exports) {
 		dialogs: [],
 		storage: null,
 		events: {
-			"click #start": "onStart",
-			"click #stop": "onStop",
-			"click #next": "onNext",
-			"click #clear": "onClear",
-			"submit #setTickForm": "onSetTickFromSubmit",
-			"click #save": "onSave",
-			"click #load": "onLoad",
-			"click #randomize": "onRandomize",
-			"click #gun": "onGun"
+			"submit #setTickForm": "onSetTickFromSubmit"
 		},
 		initialize: function(options){
 			options || (options = {});
@@ -48,6 +40,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 			this.initializeChildren(options);
 			this.initializeDialogs(options);
+			this.initializeControls(options);
 
 			var _that = this;
 			var konami = new Konami(function(){
@@ -83,47 +76,31 @@ if (typeof module !== "undefined" && module.exports) {
 			loadView.listenTo(this, "load", loadView.render)
 			this.dialogs.push(loadView);
 		},
+		initializeControls: function(options){
+			var controls = new Application.ControlsView();
+
+			controls.on("start", function(){ this.trigger("start"); }, this);
+			controls.on("stop", function(){ this.trigger("stop"); }, this);
+			controls.on("clear", function(){ this.trigger("clear"); }, this);
+			controls.on("save", function(){ this.trigger("save"); }, this);
+			controls.on("load", function(){ this.trigger("load"); }, this);
+			controls.on("randomize", function(){ this.trigger("randomize"); }, this);
+
+			controls.on("konami", this._konami, this);
+			controls.on("gun", this.onGun, this);
+
+			this.children.push(controls);
+		},
 		render: function(){
 			_.each(this.children, function(child){
 				child.render();
 			});
 			return this;
 		},
-		onStart: function() {
-			this.$("#start, #next, #clear, #save, #load, #randomize").attr("disabled", "disabled");
-			this.$("#stop").removeAttr("disabled");
-			this.trigger("start");
-		},
-		onStop: function() {
-			this.$("#start, #next, #clear, #save, #load, #randomize").removeAttr("disabled");
-			this.$("#stop").attr("disabled", "disabled");
-			this.trigger("stop");
-		},
-		onNext: function(){
-			var nextButton = this.$("#next");
-			if(nextButton.hasClass("animated")){
-				nextButton.removeClass("animated");
-				this._konami();
-			} else {
-				Backbone.trigger("tick");
-			}
-		},
-		onClear: function(){
-			this.trigger("clear");
-		},
 		onSetTickFromSubmit: function(e){
 			var newSpeed = this.$("#tick").val();
 			this.trigger("changeSpeed", newSpeed);
 			return false;
-		},
-		onSave: function(){
-			this.trigger("save");
-		},
-		onLoad: function(){
-			this.trigger("load");
-		},
-		onRandomize: function(){
-			this.trigger("randomize");
 		},
 		onGun: function(){
 			var worldView = this.children[1] || {};
