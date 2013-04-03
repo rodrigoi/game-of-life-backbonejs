@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "This is a kata for Conway's Game of Life implemented using Backbone.JS",
   "scripts": {
-    "test": "mocha",
+    "test": "./node_modules/.bin/mocha",
     "start": "node server.js"
   },
   "repository": {
