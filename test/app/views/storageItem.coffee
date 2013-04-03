@@ -7,67 +7,79 @@ chai.use require("sinon-chai")
 Application = require "../../../src/app/views/storageItem"
 
 describe "Storage Item View", ->
+	describe "Event UI Binding", ->
+		it "should bind itself to the click event of the load button", ->
+			onClickStub = sinon.stub Application.StorageItemView.prototype, "onLoad"
 
-	it "should bind itself to the click event of the load button", ->
-		onClickSpy = sinon.spy Application.StorageItemView.prototype, "onLoad"
+			storageItem = new Application.StorageItem
+				index: 1, key: "key", value: "value"
 
-		storageItem = new Application.StorageItem
-			index: 1, key: "key", value: "value"
+			view = new Application.StorageItemView
+				model: storageItem
 
-		view = new Application.StorageItemView
-			model: storageItem
+			view.render()
+			view.$(".load").click()
 
-		view.render()
-		view.$(".load").click()
+			onClickStub.should.have.been.calledOnce
+			onClickStub.restore()
 
-		onClickSpy.should.have.been.calledOnce
-		onClickSpy.restore()
+		it "should bind itseld to the click event of the remove button", ->
+			onClickStub = sinon.stub Application.StorageItemView.prototype, "onRemove"
 
-	it "should bind itseld to the click event of the remove button", ->
-		onClickSpy = sinon.spy Application.StorageItemView.prototype, "onRemove"
+			storageItem = new Application.StorageItem
+				index: 1, key: "key", value: "value"
 
-		storageItem = new Application.StorageItem
-			index: 1, key: "key", value: "value"
+			view = new Application.StorageItemView
+				model: storageItem
 
-		view = new Application.StorageItemView
-			model: storageItem
+			view.render()
+			view.$(".remove").click()
 
-		view.render()
-		view.$(".remove").click()
+			onClickStub.should.have.been.calledOnce
+			onClickStub.restore()
 
-		onClickSpy.should.have.been.calledOnce
-		onClickSpy.restore()
+	describe "Render", ->
+		it "should return itself to provide a chainable interface", ->
+			storageItem = new Application.StorageItem
+				index: 1, key: "key", value: "value"
 
-	it "should render itself", ->
-		storageItem = new Application.StorageItem
-			index: 1, key: "key", value: "value"
+			view = new Application.StorageItemView
+				model: storageItem
 
-		view = new Application.StorageItemView
-			model: storageItem
+			view.render().should.equal view
 
-		view.render()
-		view.$el.children().length.should.equal 3
+		it "should render the storage items", ->
+			storageItem = new Application.StorageItem
+				index: 1, key: "key", value: "value"
 
-	it "should trigger view \"loadStorageItem\" event when calling onLoad", (done) ->
-		storageItem = new Application.StorageItem
-			index: 1, key: "key", value: "value"
+			view = new Application.StorageItemView
+				model: storageItem
 
-		view = new Application.StorageItemView
-			model: storageItem
+			view.render()
+			view.$el.children().length.should.equal 3
 
-		view.on "loadStorageItem", ->
-			done()
+	describe "onLoad method", ->
+		it "should trigger view \"loadStorageItem\" event when calling onLoad", (done) ->
+			storageItem = new Application.StorageItem
+				index: 1, key: "key", value: "value"
 
-		view.onLoad()
+			view = new Application.StorageItemView
+				model: storageItem
 
-	it "should trigger view \"loadStorageItem\" event when calling onLoad", (done) ->
-		storageItem = new Application.StorageItem
-			index: 1, key: "key", value: "value"
+			view.on "loadStorageItem", ->
+				done()
 
-		view = new Application.StorageItemView
-			model: storageItem
+			view.onLoad()
 
-		view.on "removeStorageItem", ->
-			done()
+	describe "onRemove method", ->
+		it "should trigger view \"loadStorageItem\" event when calling onLoad", (done) ->
+			storageItem = new Application.StorageItem
+				index: 1, key: "key", value: "value"
 
-		view.onRemove()
+			view = new Application.StorageItemView
+				model: storageItem
+
+			view.on "removeStorageItem", ->
+				done()
+
+			view.onRemove()

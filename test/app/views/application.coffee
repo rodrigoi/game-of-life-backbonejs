@@ -42,8 +42,8 @@ describe "Application View", ->
 		@clock.restore()
 
 	beforeEach ->
-		@applicationView = new Application.AppView()
-		removeListeners @applicationView
+		@view = new Application.AppView()
+		removeListeners @view
 
 	describe "UI Event Binding", ->
 		it "should bind to the submit event on the \"setTick\" element", ->
@@ -60,50 +60,30 @@ describe "Application View", ->
 	describe "Initialize", ->
 		it "should call the initialize children method", ->
 			stub = sinon.stub Application.AppView.prototype, "initializeChildren"
-			@applicationView = new Application.AppView()
+			@view = new Application.AppView()
 			stub.should.have.been.calledOnce
 			stub.restore()
 
 		it "should call the initialize dialogs method", ->
 			stub = sinon.stub Application.AppView.prototype, "initializeDialogs"
-			@applicationView = new Application.AppView()
+			@view = new Application.AppView()
 			stub.should.have.been.calledOnce
 			stub.restore()
 
 	describe "Render", ->
-		it "should return itself to provide a chainable interface"
+		it "should return itself to provide a chainable interface", ->
+			@view.render().should.equal @view
 
 	describe "other UI Events", ->
 		it "should trigger the local \"changeSpeed\" event on the form submit event handler with the new speed", (done) ->
-			@applicationView.setElement "<div><form id=\"setTickForm\"><input id=\"tick\" type=\"text\" value=\"500\"/></form></div>"
+			@view.setElement "<div><form id=\"setTickForm\"><input id=\"tick\" type=\"text\" value=\"500\"/></form></div>"
 
-			@applicationView.on "changeSpeed", (newSpeed) ->
+			@view.on "changeSpeed", (newSpeed) ->
 				newSpeed.should.equal "500"
 				done()
 
-			@applicationView.onSetTickFromSubmit()
-			@applicationView.off "changeSpeed"
+			@view.onSetTickFromSubmit()
+			@view.off "changeSpeed"
 
 		it "should cancel the form submit on the form submit event handler", ->
-			@applicationView.onSetTickFromSubmit().should.not.be.ok
-
-		#it "should trigger the local \"save\" event on save handler", (done) ->
-		#	@applicationView.on "save", ->
-		#		done()
-
-		#	@applicationView.onSave()
-		#	@applicationView.off "save"
-
-		#it "should trigger the local \"load\" event on load handler", (done) ->
-		#	@applicationView.on "load", ->
-		#		done()
-
-		#	@applicationView.onLoad()
-		#	@applicationView.off "load"
-
-		#it "should trigger the local \"randomize\" event on randomize handler", (done) ->
-		#	@applicationView.on "randomize", ->
-		#		done()
-
-		#	@applicationView.onRandomize()
-		#	@applicationView.off "randomize"
+			@view.onSetTickFromSubmit().should.not.be.ok

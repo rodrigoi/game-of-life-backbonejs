@@ -22,7 +22,6 @@ testClickEvent = (method, element) ->
 	return
 
 describe "Controls View", ->
-
 	describe "UI Event Binding", ->
 		it "should bind to the click event on the \"start\" element", ->
 			testClickEvent "onStart", "start"
@@ -48,85 +47,89 @@ describe "Controls View", ->
 		it "should bind to the click event on the \"save\" element", ->
 			testClickEvent "onGun", "gun"
 
-	describe "Event Handlers", ->
+	describe "Render", ->
+		it "should return itself to provide a chainable interface", ->
+			view = new Application.ControlsView()
+			view.render().should.equal view
+
+	describe "UI Event Handlers", ->
 		beforeEach ->
-			@applicationView = new Application.ControlsView()
+			@view = new Application.ControlsView()
 
 		it "should disable start, next, clear, save, load, randomize and gun ui elements on start", ->
-			@applicationView.setElement "<div><a id=\"start\"></a><a id=\"next\"></a><a id=\"clear\"></a><a id=\"save\"></a><a id=\"load\"></a><a id=\"randomize\"><a id=\"gun\"></a></div>"
-			@applicationView.$("a[disabled]").length.should.equal 0
-			@applicationView.onStart()
-			@applicationView.$("a[disabled]").length.should.equal 7
+			@view.setElement "<div><a id=\"start\"></a><a id=\"next\"></a><a id=\"clear\"></a><a id=\"save\"></a><a id=\"load\"></a><a id=\"randomize\"><a id=\"gun\"></a></div>"
+			@view.$("a[disabled]").length.should.equal 0
+			@view.onStart()
+			@view.$("a[disabled]").length.should.equal 7
 
 		it "should enable stop ui element on start", ->
-			@applicationView.setElement "<div><a id=\"stop\" disabled></a></div>"
-			@applicationView.$("a[disabled]").length.should.equal 1
-			@applicationView.onStart()
-			@applicationView.$("a[disabled]").length.should.equal 0
+			@view.setElement "<div><a id=\"stop\" disabled></a></div>"
+			@view.$("a[disabled]").length.should.equal 1
+			@view.onStart()
+			@view.$("a[disabled]").length.should.equal 0
 
 		it "should enable start, next, clear, save, load and randomize ui elements on stop", ->
-			@applicationView.setElement "<div><a id=\"start\" disabled></a><a id=\"next\" disabled></a><a id=\"clear\" disabled></a><a id=\"save\" disabled></a><a id=\"load\" disabled></a><a id=\"randomize\" disabled><a id=\"gun\" disabled></a></div>"
-			@applicationView.$("a[disabled]").length.should.equal 7
-			@applicationView.onStop()
-			@applicationView.$("a[disabled]").length.should.equal 0
+			@view.setElement "<div><a id=\"start\" disabled></a><a id=\"next\" disabled></a><a id=\"clear\" disabled></a><a id=\"save\" disabled></a><a id=\"load\" disabled></a><a id=\"randomize\" disabled><a id=\"gun\" disabled></a></div>"
+			@view.$("a[disabled]").length.should.equal 7
+			@view.onStop()
+			@view.$("a[disabled]").length.should.equal 0
 
 		it "should disable stop ui element on stop handler", ->
-			@applicationView.setElement "<div><a id=\"stop\"></a></div>"
-			@applicationView.$("a[disabled]").length.should.equal 0
-			@applicationView.onStop()
-			@applicationView.$("a[disabled]").length.should.equal 1
+			@view.setElement "<div><a id=\"stop\"></a></div>"
+			@view.$("a[disabled]").length.should.equal 0
+			@view.onStop()
+			@view.$("a[disabled]").length.should.equal 1
 
-		describe "Event Broadcasting", ->
+	describe "Event Broadcasting", ->
+		it "should trigger local \"start\" event on the start handler", (done) ->
+			@view.on "start", ->
+				done()
 
-			it "should trigger local \"start\" event on the start handler", (done) ->
-				@applicationView.on "start", ->
-					done()
+			@view.onStart()
 
-				@applicationView.onStart()
+		it "should trigger local \"stopTimer\" event on the stop handler", (done) ->
+			@view.on "stop", ->
+				done()
 
-			it "should trigger local \"stopTimer\" event on the stop handler", (done) ->
-				@applicationView.on "stop", ->
-					done()
+			@view.onStop()
+			@view.off "stop"
 
-				@applicationView.onStop()
-				@applicationView.off "stop"
+		it "should trigger the global \"tick\" event on the next handler", (done) ->
+			Backbone.on "tick", ->
+				done()
+			@view.onNext()
+			Backbone.off "tick"
 
-			it "should trigger the global \"tick\" event on the next handler", (done) ->
-				Backbone.on "tick", ->
-					done()
-				@applicationView.onNext()
-				Backbone.off "tick"
+		it "should trigger the local \"clear\" event on the clear handler", (done) ->
+			@view.on "clear", ->
+				done()
+			@view.onClear()
+			@view.off "clear"
 
-			it "should trigger the local \"clear\" event on the clear handler", (done) ->
-				@applicationView.on "clear", ->
-					done()
-				@applicationView.onClear()
-				@applicationView.off "clear"
+		it "should trigger the local \"save\" event on the save handler", (done) ->
+			@view.on "save", ->
+				done()
 
-			it "should trigger the local \"save\" event on the save handler", (done) ->
-				@applicationView.on "save", ->
-					done()
+			@view.onSave()
+			@view.off "save"
 
-				@applicationView.onSave()
-				@applicationView.off "save"
+		it "should trigger the local \"load\" event on the load handler", (done) ->
+			@view.on "load", ->
+				done()
 
-			it "should trigger the local \"load\" event on the load handler", (done) ->
-				@applicationView.on "load", ->
-					done()
+			@view.onLoad()
+			@view.off "load"
 
-				@applicationView.onLoad()
-				@applicationView.off "load"
+		it "should trigger the local \"randomize\" event on the randomize handler", (done) ->
+			@view.on "randomize", ->
+				done()
 
-			it "should trigger the local \"randomize\" event on the randomize handler", (done) ->
-				@applicationView.on "randomize", ->
-					done()
+			@view.onRandomize()
+			@view.off "randomize"
 
-				@applicationView.onRandomize()
-				@applicationView.off "randomize"
+		it "should trigger the local \"gun\" event on the gun event handler", (done) ->
+			@view.on "gun", ->
+				done()
 
-			it "should trigger the local \"gun\" event on the gun event handler", (done) ->
-				@applicationView.on "gun", ->
-					done()
-
-				@applicationView.onGun()
-				@applicationView.off "gun"
+			@view.onGun()
+			@view.off "gun"

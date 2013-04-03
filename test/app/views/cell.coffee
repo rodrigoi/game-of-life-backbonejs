@@ -8,7 +8,7 @@ Application = require "../../../src/app/views/cell"
 
 describe "Cell View", ->
 	beforeEach ->
-		@cellView = new Application.CellView
+		@view = new Application.CellView
 			model: new Application.Cell()
 
 	it "should respond to the click event", ->
@@ -16,11 +16,11 @@ describe "Cell View", ->
 			alive: false
 
 		onClickStub = sinon.stub Application.CellView.prototype, "onClick"
-		@cellView = new Application.CellView
+		@view = new Application.CellView
 			model: cell
 
-		@cellView.render()
-		@cellView.$el.click()
+		@view.render()
+		@view.$el.click()
 
 		onClickStub.should.have.been.calledOnce
 		onClickStub.restore()
@@ -30,7 +30,7 @@ describe "Cell View", ->
 			alive: false
 
 		renderSpy = sinon.spy Application.CellView.prototype, "render"
-		@cellView = new Application.CellView
+		@view = new Application.CellView
 			model: cell
 
 		cell.set "nextState", true
@@ -42,29 +42,29 @@ describe "Cell View", ->
 		renderSpy.restore()
 
 	it "should return the view object when calling render", ->
-		@cellView.render().should.equal @cellView
+		@view.render().should.equal @view
 
 	it "should render a div with a class for a live cell", ->
 		cell = new Application.Cell
 			alive: true
 
-		@cellView.model = cell
+		@view.model = cell
 
-		@cellView.render()
-		@cellView.$el.hasClass("alive").should.be.ok
+		@view.render()
+		@view.$el.hasClass("alive").should.be.ok
 
 	it "should render a div without class for a dead cell", ->
 		cell = new Application.Cell
 			alive: false
 
-		@cellView.model = cell
+		@view.model = cell
 
-		@cellView.render()
-		@cellView.$el.hasClass("alive").should.not.be.ok
+		@view.render()
+		@view.$el.hasClass("alive").should.not.be.ok
 
 	it "should toggle the model's state when the onClick event handler is called", ->
 		cell = new Application.Cell
 			alive: false
-		@cellView.model = cell
-		@cellView.onClick()
+		@view.model = cell
+		@view.onClick()
 		cell.get("alive").should.be.ok

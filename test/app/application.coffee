@@ -30,5 +30,10 @@ describe "Application", ->
 		after ->
 			@clock.restore()
 
-		it "should initialize the ticker objects", ->
+		it "should initialize the ticker object", ->
 			Application.ticker.should.exist
+
+		it "should initialize the storage object", ->
+			Application.storage.should.exist
+
+		it "should create an application view"

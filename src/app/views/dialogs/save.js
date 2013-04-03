@@ -23,6 +23,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 			this.$("textarea").text(this.json);
 			this.$el.modal("show");
+			return this;
 		},
 		onDownload: function(){
 			var blob = new Blob([this.json], { type: "text/plain;charset=utf-8"});

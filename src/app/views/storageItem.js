@@ -14,13 +14,10 @@ if (typeof module !== "undefined" && module.exports) {
 
 	Application.StorageItemView = Backbone.View.extend({
 		tagName: "tr",
-		template: _.template("<td><%= key %></td><td><button class=\"load btn btn-small\"><span class=\"icon-upload\"></span>Load</button></td><td><button class=\"remove btn btn-small btn-danger\"><span class=\"icon-trash\"></span>Remove</button></td>"),
+		template: _.template("<td><%= key %></td><td><button class=\"load btn btn-small btn-success\"><span class=\"icon-upload\"></span>Load</button></td><td><button class=\"remove btn btn-small btn-danger\"><span class=\"icon-trash\"></span>Remove</button></td>"),
 		events: {
 			"click .load": "onLoad",
 			"click .remove": "onRemove"
-		},
-		initilize: function(){
-			this.listenTo(this.model, "destroy", this.destroy);
 		},
 		render: function(){
 			this.$el.html(this.template(this.model.attributes));
