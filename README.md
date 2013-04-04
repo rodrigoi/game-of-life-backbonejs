@@ -287,3 +287,7 @@ If you remember the Konami Code, there's something special behind one of the con
 ----
 
 Have fun, and enjoy your burrito ;)
+
+----
+
+![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/sublime.png)
