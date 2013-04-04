@@ -84,7 +84,7 @@ The third section contains a form that allows the user to save the current game 
 
 #### Load Dialog
 
-If the user clicks the "Load" button below the game world, it's presented with the load dialog. If the burton is disabled, it means that the game is running. Stop the game to enable the button by clicking "Stop"
+If the user clicks the "Load" button below the game world, it's presented with the load dialog. If the button is disabled, it means that the game is running. Stop the game to enable the button by clicking "Stop"
 
 ![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/load.png)
 
@@ -189,7 +189,7 @@ The core business rules are implemented here. The "shouldBeAlive" method receive
 ###### The World Collection
 
 The world collections contains a representation of all the cells in the grid. This is the other class responsible for the games rules, because it needs to accurately calculate the number of neighboring living cell for any model it holds.
-When this collection is created, it initialize itself using the width and height provided by the application view. This is important, because there's only one instance of this class across the application, and several views (load, save, world) hold a reference to it to.
+When this collection is created, it initializes itself using the width and height provided by the application view. This is important, because there's only one instance of this class across the application, and several views (load, save, world) hold a reference to it to.
 It can randomize the state of the models, and also kill them all using the "clear" method.
 
 But the important part is the "liveNeighbours" method. It uses an array representing the grid surrounding the cell in question, and returns the count of living cells. Here, like this:
