@@ -43,15 +43,31 @@ To run the samples, you need to use [bower](http://twitter.github.com/bower/) to
 
 	$ npm install
 	$ bower install
-	$ npm start
+	$ make start
 	
 	Now you can open your browser on http://localhost:1701
 
 That will load all the node dependencies for the mocha test runner, and all the bower dependencies for the web application. You can point your browser to [http://localhost:1701/](http://localhost:1701/)
 
-To run the tests, simply run:
+#### Makefile
 
-	$ npm test
+A makefile is provided to start the dev server, run tests, watch files and run coverage reports.
+
+For example, to run the tests, simply run:
+
+	$ make test
+	
+To run the test in watch mode:
+
+	$ make watch
+	
+to generate coverage reports:
+
+	$ make coverage
+	
+and to start the dev server:
+
+	$ make start
 
 That will run the mocha command line runner using the mocha.opts file on the test folder and the binary on the local node_modules folder.
 
@@ -149,6 +165,8 @@ The .gitignore file is located two levels down, on the dojo folder. Be careful w
 The front end uses [Backbone.js](http://backbonejs.org/), [Bootstrap](http://twitter.github.com/bootstrap/), [Modernizr](http://modernizr.com/) and [Underscore.JS](http://underscorejs.org/). It also uses the [FileServer.js](https://github.com/eligrey/FileSaver.js) dependency to manipulate blobs for file download.
 
 To run the tests and the code on node, we need [CoffeeScript](http://coffeescript.org/), [Mocha](http://visionmedia.github.com/mocha/) as the test runner, [Chai](http://chaijs.com/) for assertions, [Sinon.JS](http://sinonjs.org/) for stubs, spies and mock objects. Also, the [Sinon-Chai](http://chaijs.com/plugins/sinon-chai) assertion library will come handy. [Node Inspector](https://github.com/dannycoates/node-inspector) for debugging, [Node LocalStorage](https://github.com/lmaccherone/node-localstorage) as a drop in replacement for the browser's local storage. Also, we need the node packages for jQuery, Backbone and Underscore. Oh, and [express](http://expressjs.com/) to run the demo server.
+
+Test coverage is generated using [JSCoverage](https://github.com/visionmedia/node-jscoverage). You can check the latest version [here](http://rodrigoi.github.com/dojo/Conways-Game-of-Life/BackboneJS/coverage.html).
 
 #### The Backbone.JS Application
 
@@ -269,6 +287,8 @@ Both dialogs use the Bootstrap "Modal" jQuery plugin.
 
 ##### The Tests
 
+![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/coverage.png)
+
 One of the challenges of this exercise is run a complete set of tests for the public javascript, meant to run on the server, using a node.js runner like mocha. Not just a headless browser like zombie or phantoms, but use only mocha.
 
 To archive that, each javascript file needs to know where it's been loaded. If it's loaded as a node module, it should use some objects from the global namespace. If not, the files will be loaded by the browser and will be there when needed.
@@ -278,6 +298,8 @@ There's an "index.js" files that instruct node to treat the whole /src/app folde
 The tests should require /src/app as a whole, and leave the module loading in the capable hands of node.js.
 
 All the tests are written in coffee script because of it's expressiveness. And also because it's a fun language to work with :P
+
+Also, an html coverage report is generated for /src/app inside the test folder. You can check the latest version [here](http://rodrigoi.github.com/dojo/Conways-Game-of-Life/BackboneJS/coverage.html).
 
 ### Retrospective
 
