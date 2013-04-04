@@ -30,13 +30,16 @@ To run the samples, you need to use [bower](http://twitter.github.com/bower/) to
 	$ npm install
 	$ bower install
 	$ npm start
+	
+	Now you can open your browser on http://localhost:1701
 
-That will load all the node dependencies for the mocha test runner, and all the bower dependencies for the web application.
+That will load all the node dependencies for the mocha test runner, and all the bower dependencies for the web application. You can point your browser to [http://localhost:1701/](http://localhost:1701/)
+
 To run the tests, simply run:
 
 	$ npm test
 
-That will run the mocha command line runner using the mocha.opts file on the test folder.
+That will run the mocha command line runner using the mocha.opts file on the test folder and the binary on the local node_modules folder.
 
 You should see something like this:
 
