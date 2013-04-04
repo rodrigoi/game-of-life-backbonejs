@@ -1,9 +1,23 @@
 # Conway's Game of Life #
 
+---
+
+![image](http://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif)
+
+The rules are quite simple:
+
+- Any live cell with fewer than two live neighbors dies (loneliness by under-population).
+- Any live cell with two or three live neighbors lives on to the next generation.
+- Any live cell with more than three live neighbors dies (crashed by over population).
+- Any dead cell with no more and no less than three neighbors comes to life.
+
+Some history, from [Wikipedia](http://en.wikipedia.org/wiki/Conways_Game_of_Life):
+
+> Conway was interested in a problem presented in the 1940s by mathematician John von Neumann, who attempted to find a hypothetical machine that could build copies of itself and succeeded when he found a mathematical model for such a machine with very complicated rules on a rectangular grid. The Game of Life emerged as Conway's successful attempt to drastically simplify von Neumann's ideas. The game made its first public appearance in the October 1970 issue of Scientific American, in Martin Gardner's "Mathematical Games" column. From a theoretical point of view, it is interesting because it has the power of a universal Turing machine: that is, anything that can be computed algorithmically can be computed within Conway's Game of Life.
+
 ## Backbone.JS Implementation
 
-
-This folder contains the Backbone.JS implementation of Conway's Game of Life. You can check an online version [here](http://rodrigoi.github.com/dojo/Conways-Game-of-Life/BackboneJS/).
+This folder contains the Backbone.JS implementation of [Conway's Game of Life](http://en.wikipedia.org/wiki/Conway's_Game_of_Life). You can check an online version of this code [here](http://rodrigoi.github.com/dojo/Conways-Game-of-Life/BackboneJS/).
 
 The application just needs a server for demonstration purposes. Any server capable of serving status files should do. For development purposes, a simple node.js server is provided.
 
