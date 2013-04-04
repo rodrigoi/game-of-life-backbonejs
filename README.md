@@ -254,6 +254,16 @@ Both dialogs use the Bootstrap "Modal" jQuery plugin.
 
 ##### The Tests
 
+One of the challenges of this exercise is run a complete set of tests for the public javascript, meant to run on the server, using a node.js runner like mocha. Not just a headless browser like zombie or phantoms, but use only mocha.
+
+To archive that, each javascript file needs to know where it's been loaded. If it's loaded as a node module, it should use some objects from the global namespace. If not, the files will be loaded by the browser and will be there when needed.
+
+There's an "index.js" files that instruct node to treat the whole /src/app folder as a module package, and it points to /src/app/application.js. In application.js it's located the boilerplate code to mimic the browser global object and create the Application namespace for all the tests to use.
+
+The tests should require /src/app as a whole, and leave the module loading in the capable hands of node.js.
+
+All the tests are written in coffee script because of it's expressiveness. And also because it's a fun language to work with :P
+
 ### Retrospective
 
 Being this my first attempt to use mocha as the test runner for javascript applications intended to run in the browser, there are some…
