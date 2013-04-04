@@ -55,7 +55,7 @@ In case you have trouble, try to install mocha, and bower as global packages. To
 
 ### User Interface
 
-The user interface was implemented using Twitter's Bootstrap library, and it comprises three windows
+The user interface was implemented using Twitter's Bootstrap library, and it comprises three windows.
 
 #### Main Window
 
