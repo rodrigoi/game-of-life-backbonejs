@@ -272,12 +272,13 @@ and...
 #### Things to improve
 
 - Implement the solution using an AMD. BackboneJS + RequireJS maybe? Testing will be interesting.
-- Clean up the module requires for the public scripts.
+- ~~Clean up the module requires for the public scripts.~~
 - The grid is held in place by css, modify the world view to create proper rows.
 - Split the localStorage component into two. Local Storage and World utilities.
 - Implement ZombieJS tests in mocha.
 - Form Validation/Model Binding?
 - Implement a Grunt lint/minify file.
+- Remove the FOUC like behavior when the application starts.
 
 ## Extras
 
