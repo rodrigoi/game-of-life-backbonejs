@@ -56,26 +56,24 @@ A makefile is provided to start the dev server, run tests, watch files and run c
 For example, to run the tests, simply run:
 
 	$ make test
-	
-To run the test in watch mode:
-
-	$ make watch
-	
-to generate coverage reports:
-
-	$ make coverage
-	
-and to start the dev server:
-
-	$ make start
-
-That will run the mocha command line runner using the mocha.opts file on the test folder and the binary on the local node_modules folder.
 
 You should see something like this:
 
 ![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/mocha.png)
 
 Isn't that [cute](https://www.youtube.com/watch?v=QH2-TGUlwu4)?
+
+To run the test in watch mode:
+
+	$ make watch
+
+to generate coverage reports:
+
+	$ make coverage
+
+and to start the dev server:
+
+	$ make start
 
 In case you have trouble, try to install mocha, and bower as global packages. To do that, just run
 
