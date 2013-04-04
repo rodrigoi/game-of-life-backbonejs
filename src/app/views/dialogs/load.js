@@ -3,6 +3,9 @@ var Application = Application || {};
 if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
 	module.exports = Application
 	Application = global.Application
+
+	FileReader = function(){}
+	FileReader.prototype.readAsText = function(){}
 }
 
 (function(){
@@ -23,6 +26,7 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 		},
 		render: function(){
 			this.$("table tbody").empty();
+
 			this.collection.each(function(storageItem){
 				var itemView = new Application.StorageItemView({ model: storageItem});
 

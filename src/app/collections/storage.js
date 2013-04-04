@@ -9,6 +9,5 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 	"use strict";
 
 	Application.Storage = Backbone.Collection.extend({
-		model: Application.StorageItem
 	});
 })();
