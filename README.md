@@ -130,7 +130,6 @@ And this file you're reading is README.md ;)
 
 The .gitignore file is located two levels down, on the dojo folder. Be careful with that :)
 
-
 #### The Dependencies
 
 The front end uses [Backbone.js](http://backbonejs.org/), [Bootstrap](http://twitter.github.com/bootstrap/), [Modernizr](http://modernizr.com/) and [Underscore.JS](http://underscorejs.org/). It also uses the [FileServer.js](https://github.com/eligrey/FileSaver.js) dependency to manipulate blobs for file download.
@@ -143,6 +142,18 @@ As we said earlier, this is a BackboneJS application, but since it's a really si
 
 The solution is implemented around an "Application" namespace.
 
+##### The Global Events
+
+The applications works thanks to two global events. The "tick" event dispatched by the Ticker Component and the "Next Generation" button, and the "regenerate" event dispatched by the world view.
+
+When the Ticker dispatches a "tick" event, a handler in the world view scans the grid asking all the cells if they should be alive by the time the next tick arrives. Once the grid has been scanned, the view triggers the "regenerate" event. The cell model listens to this event, and resets itself to the next state. That triggers the change event on the view, that repaints the cell.
+
+That's how it's done.
+
+##### The Application
+
+The application class, thru it's initialize method provides the application entry point. It's in charge of creating and managing the ticket component and instantiating the main application view.
+
 ##### The Base Classes
 
 There are two base class that are implemented into the Backbone namespace, "component" and "dialog".
@@ -154,16 +165,6 @@ The component class is there to provide other classes the ability to extend them
 ###### The Base Dialog
 
 The dialog class is an extension of Backbone.View that holds some boilerplate code shared by both the save and load dialogs. Objects that extend this class should call the base class initialize method to make those defaults effective.
-
-##### The Application
-
-##### The Global Events
-
-The applications works thanks to two global events. The "tick" event dispatched by the Ticker Component and the "Next Generation" button, and the "regenerate" event dispatched by the world view.
-
-When the Ticker dispatches a "tick" event, a handler in the world view scans the grid asking all the cells if they should be alive by the time the next tick arrives. Once the grid has been scanned, the view triggers the "regenerate" event. The cell model listens to this event, and resets itself to the next state. That triggers the change event on the view, that repaints the cell.
-
-That's how it's done.
 
 ##### The Components
 
