@@ -48,7 +48,7 @@ In case you have trouble, try to install mocha, and bower as global packages. To
 
 	$ npm install -g bower mocha
 	
-*** do not sudo npm ***. Follow [this guide](http://howtonode.org/introduction-to-npm) if you need to su/sudo to install npm packages.
+**Do not sudo npm**. Follow [this guide](http://howtonode.org/introduction-to-npm) if you need to su/sudo to install npm packages.
 
 ### User Interface
 
