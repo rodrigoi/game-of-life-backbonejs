@@ -52,7 +52,7 @@ In case you have trouble, try to install mocha, and bower as global packages. To
 
 ### User Interface
 
-The user interface was implemented using Twitter's Bootstrap library, and it comprises thee windows
+The user interface was implemented using Twitter's Bootstrap library, and it comprises three windows
 
 #### Main Window
 
@@ -158,7 +158,7 @@ The dialog class is an extension of Backbone.View that holds some boilerplate co
 
 The applications works thanks to two global events. The "tick" event dispatched by the Ticker Component and the "Next Generation" button, and the "regenerate" event dispatched by the world view.
 
-When the Ticker dispatches a "tick" event, a handler in the world view scans the grid asking all the cells if they should be alive by the time the next tick arrives. Once the gris has been scanned, the view triggers the "regenerate" event. The cell model listens to this event, and resets itself to the next state. That triggers the change event on the view, that repaints the cell.
+When the Ticker dispatches a "tick" event, a handler in the world view scans the grid asking all the cells if they should be alive by the time the next tick arrives. Once the grid has been scanned, the view triggers the "regenerate" event. The cell model listens to this event, and resets itself to the next state. That triggers the change event on the view, that repaints the cell.
 
 That's how it's done.
 
@@ -260,6 +260,7 @@ Being this my first attempt to use mocha as the test runner for javascript appli
 - Running scripts intended to run in the browser on node.js requires a more careful planning of the application's namespaces. Using a browser runner you can be less strict with the application structure.
 - You have to be extremely careful with the global scope, since it behaves differently on node.js.
 - You have to treat the scripts as node modules. Or better, as a node module split across different files, but also implement careful measures to avoid breaking the browser functionality.
+- Running all your scrips on the server is cool, but you have to dance a dangerous ballet with node's global scope.
 - It you have to require to many files to make it run in the node.js runner, that's a good sign that the module may be doing more than it should be doing. The shorter the list, the better.
 - Backbone sucks at dependency injection.
 

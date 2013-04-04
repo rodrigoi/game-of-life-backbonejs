@@ -1,20 +1,14 @@
 var Application = Application || {};
 
-if (typeof module !== "undefined" && module.exports) {
-	var _ = _ || require("underscore");
-	var Backbone = Backbone || require("backbone");
-
-	Application = require("../../base/dialog");
-	_.extend(Application, require("../../components/localStorage"));
-	Application.use(Backbone)
-
-	module.exports = Application;
+if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
+	module.exports = Application
+	Application = global.Application
 }
 
 (function(){
 	"use strict";
 
-	Application.SaveDialogView = Application.Dialog.extend({
+	Application.SaveDialogView = Backbone.Dialog.extend({
 		el: "#saveDialog",
 		json: "",
 		events: {
@@ -39,4 +33,4 @@ if (typeof module !== "undefined" && module.exports) {
 			this.$el.modal("hide");
 		}
 	});
-})()
+})();

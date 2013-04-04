@@ -4,9 +4,8 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-Backbone = require "backbone"
-
-Application = require "../../../src/app/views/controls"
+Backbone = require("../../../src/app").Backbone
+Application = require("../../../src/app").Application
 
 testClickEvent = (method, element) ->
 	stub = sinon.stub Application.ControlsView.prototype, method

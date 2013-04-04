@@ -4,9 +4,7 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-Application = require "../../../src/app/collections/world"
-
-Application.use Math
+Application = require("../../../src/app").Application
 
 shouldIgnoreCells = (world, cell, indexes) ->
 	world.liveNeighbours(cell).should.equal 0
@@ -23,7 +21,6 @@ shouldCountLivingCells = (world, cell, patterns) ->
 	return
 
 describe "World", ->
-
 	describe "Defaults", ->
 		it "should default to a 0 by 0 grid if no parameters are provided on the constructor", ->
 			world = new Application.World()
@@ -53,7 +50,7 @@ describe "World", ->
 			randomStub.callCount.should.equal 10 * 10
 
 	describe "Clean", ->
-		it "should set kill all living cells", ->
+		it "should kill all living cells", ->
 			world = new Application.World [
 				{ x: 0, y: 0, alive: true } #cell at 0
 				{ x: 1, y: 0, alive: true } #cell at 1
@@ -70,7 +67,6 @@ describe "World", ->
 			).should.have.length 0
 
 	describe "Single cell world", ->
-
 		it "should return false for a single cell world", ->
 			@world = new Application.World [
 				{ x: 0, y: 0 } #cell at 0

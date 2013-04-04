@@ -1,22 +1,14 @@
 var Application = Application || {};
 
-if (typeof module !== "undefined" && module.exports) {
-	var _ = _ || require("underscore");
-	var Backbone = Backbone || require("backbone");
-
-	Application = require("../models/cell");
-
-	module.exports = Application;
-	module.exports.use = function(Math){
-		Math = Math
-	}
+if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
+	module.exports = Application
+	Application = global.Application
 }
 
 (function(){
 	"use strict";
 
 	Application.World = Backbone.Collection.extend({
-		model: Application.Cell,
 		cellNeighbours: [
 			[-1, -1], [0, -1], [1, -1],
 			[-1,  0],          [1,  0],
@@ -64,5 +56,4 @@ if (typeof module !== "undefined" && module.exports) {
 			}, this);
 		}
 	});
-
 })();

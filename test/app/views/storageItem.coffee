@@ -4,7 +4,7 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-Application = require "../../../src/app/views/storageItem"
+Application = require("../../../src/app").Application
 
 describe "Storage Item View", ->
 	describe "Event UI Binding", ->

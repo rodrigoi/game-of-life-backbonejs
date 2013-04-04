@@ -1,15 +1,8 @@
 var Application = Application || {};
 
-if (typeof module !== "undefined" && module.exports) {
-	var _ = _ || require("underscore");
-	var Backbone = Backbone || require("backbone");
-
+if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
 	module.exports = Application
-	//very basic dependency injection, since in this case
-	//Backbone must be shared with the test
-	module.exports.use = function(Backbone){
-		Backbone = Backbone
-	}
+	Application = global.Application
 }
 
 (function(){

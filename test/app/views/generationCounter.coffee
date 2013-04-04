@@ -4,7 +4,7 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-Application = require "../../../src/app/views/generationCounter"
+Application = require("../../../src/app").Application
 
 describe "Generation Counter View", ->
 	beforeEach ->

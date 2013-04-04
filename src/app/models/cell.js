@@ -1,9 +1,8 @@
 var Application = Application || {};
 
-if (typeof module !== "undefined" && module.exports) {
-	var Backbone = Backbone || require("backbone");
-
-	module.exports = Application;
+if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
+	module.exports = Application
+	Application = global.Application
 }
 
 (function(){
@@ -34,5 +33,4 @@ if (typeof module !== "undefined" && module.exports) {
 			this.set("nextState", false);
 		}
 	});
-
 })();

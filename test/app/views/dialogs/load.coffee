@@ -4,7 +4,7 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-Application = require "../../../../src/app/views/dialogs/load"
+Application = require("../../../../src/app").Application
 
 testCustomUIEvent = (method, element, event) ->
 	stub = sinon.stub Application.LoadDialogView.prototype, method

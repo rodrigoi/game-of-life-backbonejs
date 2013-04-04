@@ -4,10 +4,8 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-Backbone = require "../../../src/app/base/component"
-Application = require "../../../src/app/components/ticker"
-
-Application.use Backbone
+Backbone = require("../../../src/app").Backbone
+Application = require("../../../src/app").Application
 
 describe "Ticker Component", ->
 	before ->

@@ -4,10 +4,7 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-LocalStorage = require("node-localstorage").LocalStorage;
-
-Application = require "../../src/app/application"
-Application.useLocalStorage = new LocalStorage "./scratch"
+Application = require("../../src/app").Application
 
 describe "Application", ->
 	it "should exist as a variable for the Namespace", ->
@@ -18,10 +15,10 @@ describe "Application", ->
 			Application.width.should.equal 66
 			Application.height.should.equal 20
 
-		it "should default with a null ticker", ->
+		it "should default to a null ticker", ->
 			should.not.exist Application.ticker
 
-		it "should default with a null world view", ->
+		it "should default to a null world view", ->
 			should.not.exist Application.worldView
 
 	describe "Initialize", ->

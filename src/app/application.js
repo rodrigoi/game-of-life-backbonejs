@@ -1,19 +1,48 @@
 var Application = Application || {};
+if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
+	var jQuery = require("jquery");
+	var _ = _ = require("underscore");
+	var Backbone = Backbone || require("Backbone");
 
-if (typeof module !== "undefined" && module.exports) {
-	var _ = _ || require("underscore");
+	Backbone.$ = jQuery;
+	Backbone.jQuery = jQuery;
 
-	//the shorter the list of dependencies, the better
-	Backbone = require("./base/component");
+	global.Backbone = Backbone;
+	global._ = _;
+	global.$ = jQuery;
+	global.jQuery = jQuery;
 
-	_.extend(Application, require("./components/ticker"));
-	Application.use(Backbone);
+	global.Application = Application;
+
+	_.extend(Backbone, require("./base/component"));
+	_.extend(Backbone, require("./base/dialog"));
+
+	_.extend(Application, require("./collections/storage"));
+	_.extend(Application, require("./collections/world"));
 
 	_.extend(Application, require("./components/localStorage"));
-	Application.use(Backbone);
-	_.extend(Application, require("./views/application"));
+	_.extend(Application, require("./components/ticker"));
 
-	module.exports = Application;
+	_.extend(Application, require("./models/cell"));
+	_.extend(Application, require("./models/storageItem"));
+
+	_.extend(Application, require("./views/application"));
+	_.extend(Application, require("./views/cell"));
+	_.extend(Application, require("./views/controls"));
+	_.extend(Application, require("./views/generationCounter"));
+	_.extend(Application, require("./views/storageItem"));
+	_.extend(Application, require("./views/world"));
+
+	_.extend(Application, require("./views/dialogs/load"));
+	_.extend(Application, require("./views/dialogs/save"));
+
+
+	module.exports = {
+		_: _,
+		$: jQuery,
+		Backbone: Backbone,
+		Application: Application
+	};
 }
 
 (function(){
@@ -49,4 +78,4 @@ if (typeof module !== "undefined" && module.exports) {
 			}, this);
 		}
 	});
-})();
+})()

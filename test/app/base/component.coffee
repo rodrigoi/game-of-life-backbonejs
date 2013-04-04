@@ -4,7 +4,7 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-Backbone = require "../../../src/app/base/component"
+Backbone = require("../../../src/app").Backbone
 
 describe "Base Component Class", ->
 	it "should call initialize in the contructor class", ->

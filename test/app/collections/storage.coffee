@@ -2,7 +2,7 @@ chai = require "chai"
 
 should = chai.should()
 
-Application = require "../../../src/app/collections/storage"
+Application = require("../../../src/app").Application
 
 describe "Storage", ->
 	it "should exist in the namespace", ->

@@ -4,22 +4,17 @@ sinon = require "sinon"
 should = chai.should()
 chai.use require("sinon-chai")
 
-Backbone = require "backbone"
-_ = require "underscore"
-
-Application = require "../../../src/app/views/application"
+_ = require("../../../src/app")._
+Backbone = require("../../../src/app").Backbone
+Application = require("../../../src/app").Application
 
 testClickEvent = (method, element) ->
 	stub = sinon.stub Application.AppView.prototype, method
-
 	view = new Application.AppView()
 	removeListeners view
-
 	view.setElement "<div><a id=\"#{element}\"></a></div>"
 	view.$("##{element}").click()
-
 	stub.should.have.been.calledOnce
-
 	stub.restore()
 	return
 

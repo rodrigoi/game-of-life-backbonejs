@@ -1,10 +1,3 @@
-if (typeof module !== "undefined" && module.exports) {
-	var _ = _ || require("underscore");
-	var Backbone = Backbone || require("backbone");
-
-	module.exports = Backbone
-}
-
 (function(){
 	"use strict";
 
@@ -20,3 +13,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 	Backbone.Component.extend = Backbone.View.extend;
 })();
+
+if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
+	module.exports = Backbone
+}

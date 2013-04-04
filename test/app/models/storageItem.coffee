@@ -2,7 +2,7 @@ chai = require "chai"
 
 should = chai.should()
 
-Application = require "../../../src/app/models/storageItem"
+Application = require("../../../src/app").Application
 
 describe "Storage Item", ->
 	it "should exist", ->

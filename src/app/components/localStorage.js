@@ -1,17 +1,8 @@
 var Application = Application || {};
 
-if (typeof module !== "undefined" && module.exports) {
-	var _ = _ || require("underscore");
-	var Backbone = Backbone || require("backbone");
-
-	_.extend(Application, require("../models/storageItem"));
-	_.extend(Application, require("../collections/world"));
-	_.extend(Application, require("../collections/storage"));
-
+if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
 	module.exports = Application
-	module.exports.use = function(Backbone){
-		Backbone = Backbone
-	}
+	Application = global.Application
 
 	var localStorage = null;
 }

@@ -6,10 +6,9 @@ chai.use require("sinon-chai")
 
 LocalStorage = require('node-localstorage').LocalStorage;
 
-Backbone = require "../../../src/app/base/component"
-Application = require "../../../src/app/components/localStorage"
+Backbone = require("../../../src/app").Backbone
+Application = require("../../../src/app").Application
 
-Application.use Backbone
 localStorage = new LocalStorage "./scratch"
 
 jsonData = "{\"world\":[{\"x\":0,\"y\":0}],\"width\":2,\"height\":1,\"type\":\"world\"}"

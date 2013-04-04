@@ -1,14 +1,10 @@
 chai = require "chai"
 sinon = require "sinon"
 
-#chai.Assertion.includeStack = true;
-
 should = chai.should()
 chai.use require("sinon-chai")
 
-Backbone = require "backbone"
-
-Application = require "../../../src/app/models/cell"
+Application = require("../../../src/app").Application
 
 describe "Cell", ->
 	beforeEach ->

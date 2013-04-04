@@ -1,22 +1,10 @@
 var Application = Application || {};
 
-if (typeof module !== "undefined" && module.exports) {
-	var jQuery = $ = jQuery || require("jquery");
-	var _ = _ || require("underscore");
-	var Backbone = Backbone || require("backbone");
-	Backbone.$ = jQuery;
+if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
+	module.exports = Application
+	Application = global.Application
 
-	_.extend(Application, require("../collections/storage"));
-
-	_.extend(Application, require("./generationCounter"));
-	_.extend(Application, require("./world"));
-	_.extend(Application, require("./controls"));
-	_.extend(Application, require("./dialogs/save"));
-	_.extend(Application, require("./dialogs/load"));
-
-	module.exports = Application;
-
-	Konami = function(){}
+	Konami = function(){};
 }
 
 (function(){
