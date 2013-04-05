@@ -44,9 +44,10 @@ describe "World View", ->
 			shouldBeAliveStub.should.have.been.calledThriceß
 
 		it "should trigger the \"regenerate\" global event to notify cells", (done)  ->
-			Backbone.on "regenerate", ->
+			test = () ->
+				Backbone.off "regenerate", test
 				done()
-
+			Backbone.on "regenerate", test
 			@view.regenerate()
 
 	describe "Clear method", ->
