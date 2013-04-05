@@ -2,7 +2,7 @@ var Application = Application || {};
 if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
 	var jQuery = require("jquery");
 	var _ = _ = require("underscore");
-	var Backbone = Backbone || require("Backbone");
+	var Backbone = Backbone || require("backbone");
 
 	Backbone.$ = jQuery;
 	Backbone.jQuery = jQuery;
