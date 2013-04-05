@@ -17,6 +17,8 @@ Some history, from [Wikipedia](http://en.wikipedia.org/wiki/Conways_Game_of_Life
 
 ## Backbone.JS Implementation
 
+[![Build Status](https://travis-ci.org/rodrigoi/dojo.png?branch=master)](https://travis-ci.org/rodrigoi/dojo)
+
 This folder contains the Backbone.JS implementation of [Conway's Game of Life](http://en.wikipedia.org/wiki/Conway's_Game_of_Life). You can check an online version of this code [here](http://rodrigoi.github.com/dojo/Conways-Game-of-Life/BackboneJS/).
 
 The application just needs a server for demonstration purposes. Any server capable of serving status files should do. For development purposes, a simple node.js server is provided.
