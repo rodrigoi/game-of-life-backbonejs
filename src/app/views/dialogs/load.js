@@ -22,6 +22,7 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 		},
 		initialize: function(options) {
 			Backbone.Dialog.prototype.initialize.apply(this, arguments);
+			if(this.storage) this.collection = this.storage.items;
 			if(this.collection) this.collection.on("remove", this.render, this);
 		},
 		render: function(){
@@ -31,12 +32,8 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 				var itemView = new Application.StorageItemView({ model: storageItem});
 
 				itemView.on("loadStorageItem", function(storageItem){
-					this._loadFromString(storageItem.get("value"));
+					this._loadFromString(storageItem.get("pattern"));
 					this.$el.modal("hide");
-				}, this);
-
-				itemView.on("removeStorageItem", function(storageItem){
-					this.storage.remove(storageItem);
 				}, this);
 
 				this.$("table tbody").append(itemView.render().el);
@@ -78,7 +75,7 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 			this.$el.modal("hide");
 		},
 		_loadFromString: function(jsonWorld){
-			this.storage.updateWorldFromJSON(this.world, jsonWorld);
+			this.world.updateFromJSON(jsonWorld);
 		}
 	});
 })();

@@ -10,7 +10,7 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 
 	Application.StorageItemView = Backbone.View.extend({
 		tagName: "tr",
-		template: _.template("<td><%= key %></td><td><button class=\"load btn btn-small btn-success\"><span class=\"icon-upload\"></span>Load</button></td><td><button class=\"remove btn btn-small btn-danger\"><span class=\"icon-trash\"></span>Remove</button></td>"),
+		template: _.template("<td><%= name %></td><td><button class=\"load btn btn-small btn-success\"><span class=\"icon-upload\"></span>Load</button></td><td><button class=\"remove btn btn-small btn-danger\"><span class=\"icon-trash\"></span>Remove</button></td>"),
 		events: {
 			"click .load": "onLoad",
 			"click .remove": "onRemove"
@@ -23,7 +23,7 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 			this.trigger("loadStorageItem", this.model);
 		},
 		onRemove: function(){
-			this.trigger("removeStorageItem", this.model);
+			this.model.destroy();
 		}
 	});
 })();

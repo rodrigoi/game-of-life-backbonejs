@@ -16,7 +16,7 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 			"click #saveToLocalStorage": "onSaveToLocalStorage"
 		},
 		render: function(){
-			this.json = this.storage.createJSONItem(this.world);
+			this.json = this.world.toJSON();
 
 			this.$("textarea").text(this.json);
 			this.$el.modal("show");
@@ -28,7 +28,11 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 		},
 		onSaveToLocalStorage: function(){
 			var patternName = this.$("input[type=text]").val();
-			this.storage.addByJson(patternName, this.json);
+
+			this.storage.items.create(
+				{ name: patternName, pattern: this.json }
+			);
+
 			this.$("input[type=text]").val("");
 			this.$el.modal("hide");
 		}

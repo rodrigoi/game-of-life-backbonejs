@@ -10,9 +10,8 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 
 	Application.StorageItem = Backbone.Model.extend({
 		defaults: {
-			index: 0,
-			key: "",
-			value: ""
+			name: "",
+			pattern: ""
 		}
 	});
 })();

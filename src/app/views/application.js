@@ -33,13 +33,13 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 		},
 		initializeChildren: function(options){
 			var generationCounterView = new Application.GenerationCounterView();
+			generationCounterView.listenTo(this, "clear", generationCounterView.clear);
 			this.children.push(generationCounterView);
-			generationCounterView.listenTo(this, "clear", generationCounterView.clear)
 
 			var worldView = new Application.WorldView(options);
-			this.children.push(worldView);
 			worldView.listenTo(this, "randomize", worldView.randomize);
 			worldView.listenTo(this, "clear", worldView.clear)
+			this.children.push(worldView);
 		},
 		initializeDialogs: function(options){
 			var worldView = this.children[1] || {};
@@ -48,15 +48,13 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 				world: worldView.collection,
 				storage: this.storage
 			});
-			this.dialogs.push(saveView);
 			saveView.listenTo(this, "save", saveView.render);
+			this.dialogs.push(saveView);
 
 			var loadView = new Application.LoadDialogView({
-				collection: this.storage.items,
 				world: worldView.collection,
 				storage: this.storage
 			});
-			loadView.worldCollection = worldView.collection;
 			loadView.listenTo(this, "load", loadView.render)
 			this.dialogs.push(loadView);
 		},

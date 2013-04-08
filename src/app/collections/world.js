@@ -54,6 +54,33 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 			this.each(function(cell){
 				cell.set("alive", false);
 			}, this);
+		},
+		toJSON: function(){
+			return JSON.stringify({
+				world: this.where({ alive: true }).map(function(item){
+					return {
+						x: item.get("x"),
+						y: item.get("y")
+					};
+				}),
+				width: this.width,
+				height: this.height,
+				type: "world"
+			});
+		},
+		updateFromJSON: function(json){
+			var savedData = JSON.parse(json);
+			this.updateFromSavedData(savedData);
+		},
+		updateFromSavedData: function(savedData){
+			this.clear();
+			_.each(savedData.world, function(item){
+				var cell = this.at(item.x + item.y * savedData.width);
+
+				if(cell) {
+					cell.set("alive", true);
+				}
+			}, this);
 		}
 	});
 })();
