@@ -20,7 +20,6 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 	_.extend(Application, require("./collections/storage"));
 	_.extend(Application, require("./collections/world"));
 
-	_.extend(Application, require("./components/localStorage"));
 	_.extend(Application, require("./components/ticker"));
 
 	_.extend(Application, require("./models/cell"));
@@ -52,16 +51,12 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 		width: 66,
 		height: 20,
 		ticker: null,
-		storage: null,
 		initialize: function(){
 			this.ticker = new Application.Ticker();
 
-			this.storage = new Application.LocalStorage();
-
 			var applicationView = new Application.AppView({
 				width: this.width,
-				height: this.height,
-				storage: this.storage
+				height: this.height
 			});
 			applicationView.render();
 

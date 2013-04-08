@@ -22,7 +22,8 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 		},
 		initialize: function(options) {
 			Backbone.Dialog.prototype.initialize.apply(this, arguments);
-			if(this.storage) this.collection = this.storage.items;
+
+			if(this.storage) this.collection = this.storage;
 			if(this.collection) this.collection.on("remove", this.render, this);
 		},
 		render: function(){

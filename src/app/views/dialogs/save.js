@@ -29,7 +29,7 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 		onSaveToLocalStorage: function(){
 			var patternName = this.$("input[type=text]").val();
 
-			this.storage.items.create(
+			this.storage.create(
 				{ name: patternName, pattern: this.json }
 			);
 

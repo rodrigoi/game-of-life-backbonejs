@@ -9,8 +9,8 @@ var Application = Application || {};
 		initialize: function(options){
 			options || (options = {});
 
-			if (options.world) this.world = options.world;
-			if (options.storage) this.storage = options.storage;
+			this.world = options.world || null;
+			this.storage = options.storage || null;
 		}
 	})
 })();

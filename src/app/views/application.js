@@ -20,7 +20,9 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 		},
 		initialize: function(options){
 			options || (options = {});
-			this.storage = options.storage || {};
+
+			this.storage = new Application.Storage();
+			this.storage.fetch();
 
 			this.initializeChildren(options);
 			this.initializeDialogs(options);
