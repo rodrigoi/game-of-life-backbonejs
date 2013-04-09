@@ -1,8 +1,10 @@
 var Application = Application || {};
 
 if (typeof require === "function" && typeof exports === "object" && typeof module === "object"){
-	module.exports = Application
-	Application = global.Application
+	module.exports = Application;
+	Application = global.Application;
+	Backbone = global.Backbone;
+	Application.StorageItem = Backbone.Model.extend({});
 }
 
 (function(){

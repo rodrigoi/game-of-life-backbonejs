@@ -72,14 +72,16 @@ describe "Storage Item View", ->
 			view.onLoad()
 
 	describe "onRemove method", ->
-		it "should trigger view \"loadStorageItem\" event when calling onLoad", (done) ->
+		it "should call the model's destroy method", ->
 			storageItem = new Application.StorageItem
-				index: 1, key: "key", value: "value"
+				name: "name", pattern: "value"
+
+			destroyStub = sinon.stub storageItem, "destroy";
 
 			view = new Application.StorageItemView
 				model: storageItem
 
-			view.on "removeStorageItem", ->
-				done()
-
 			view.onRemove()
+
+			destroyStub.restore()
+			destroyStub.should.have.been.calledOnce

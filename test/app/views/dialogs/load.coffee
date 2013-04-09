@@ -50,9 +50,9 @@ describe "Load Dialog View", ->
 
 		it "should render the items correctly", ->
 			view = new Application.LoadDialogView
-				collection: new Application.Storage [
-					{ key: "foo1", value: "bar1" }
-					{ key: "foo2", value: "bar2" }
+				storage: new Application.Storage [
+					{ name: "foo1", pattern: "bar1" }
+					{ name: "foo2", pattern: "bar2" }
 				]
 			view.setElement "<div id=\"#loadDialog\"><table><tbody></tbody></table></div>"
 			view.$el.modal = ->
@@ -114,19 +114,14 @@ describe "Load Dialog View", ->
 			loadFromStringStub.restore()
 			loadFromStringStub.should.have.been.calledWith "foo"
 
-		it "should use the storage component", ->
-			storage = new Application.LocalStorage()
-			world = new Application.World()
-
+	describe "\"private\" methods", ->
+		it "should use the world's json update method", ->
 			view = new Application.LoadDialogView()
-			view.storage = storage
+			world = new Application.World()
+			updateFromJSONStub = sinon.stub world, "updateFromJSON"
+
 			view.world = world
+			view._loadFromString "This should be a JSON string"
 
-			storageMock = sinon.mock storage
-			storageMock.expects("updateWorldFromJSON").once().withExactArgs world, "foo"
-
-			view._loadFromString "foo"
-
-			storageMock.restore()
-			storageMock.verify()
-			#storageMock.should.have.been.calledWith world, "foo"
+			updateFromJSONStub.restore()
+			updateFromJSONStub.should.have.been.calledWith "This should be a JSON string"

@@ -8,8 +8,7 @@ describe "Storage Item", ->
 	it "should exist", ->
 		should.exist Application.StorageItem
 
-	it "should have a default index, key and value", ->
+	it "should have a default name and pattern", ->
 		storageItem = new Application.StorageItem()
-		storageItem.get("index").should.equal 0
-		storageItem.get("key").should.be.empty
-		storageItem.get("value").should.be.empty
+		storageItem.get("name").should.be.empty
+		storageItem.get("pattern").should.be.empty

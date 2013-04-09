@@ -286,3 +286,40 @@ describe "World", ->
 
 			it "should ignore not adjacent cells", ->
 				shouldIgnoreCells @world, @cell, [0, 1, 2, 3, 6]
+
+	describe "to JSON", ->
+
+		jsonData = "{\"world\":[{\"x\":0,\"y\":0}],\"width\":2,\"height\":1,\"type\":\"world\"}"
+
+		it "should create a json representation of the living cells", ->
+			world = new Application.World [
+				{ x: 0, y: 0, alive: true } #cell at 0
+				{ x: 1, y: 0 } #cell at 1
+			], width: 2, height: 1
+
+			world.toJSON().should.equal jsonData
+
+		it "should update a given world with from saved json string data", ->
+			world = new Application.World [
+				{ x: 0, y: 0 } #cell at 0
+				{ x: 1, y: 0 } #cell at 1
+			], width: 2, height: 1
+
+			world.updateFromJSON jsonData
+
+			world.at(0).get("alive").should.be.ok
+			world.at(1).get("alive").should.not.be.ok
+
+		it "should update a given world with from saved object data", ->
+			world = new Application.World [
+				{ x: 0, y: 0 } #cell at 0
+				{ x: 1, y: 0 } #cell at 1
+			], width: 2, height: 1
+
+			world.updateFromSavedData
+				world: [
+					{ x: 0, y: 0}
+				], width: 2, height: 1, type: "world"
+
+			world.at(0).get("alive").should.be.ok
+			world.at(1).get("alive").should.not.be.ok

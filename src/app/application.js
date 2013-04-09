@@ -17,6 +17,11 @@ if (typeof require === "function" && typeof exports === "object" && typeof modul
 	_.extend(Backbone, require("./base/component"));
 	_.extend(Backbone, require("./base/dialog"));
 
+	_.extend(Backbone, {
+		LocalStorage: function(){},
+		sync: function(){}
+	})
+
 	_.extend(Application, require("./collections/storage"));
 	_.extend(Application, require("./collections/world"));
 

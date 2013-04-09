@@ -31,7 +31,7 @@ describe "Save Dialog View", ->
 	describe "Render", ->
 		it "should return itself to provide a chainable interface", ->
 			view = new Application.SaveDialogView()
-			view.storage = new Application.LocalStorage()
+			view.world = new Application.Storage()
 
 			modalStub = sinon.stub()
 			view.$el.modal = modalStub
@@ -41,14 +41,15 @@ describe "Save Dialog View", ->
 			modalStub.should.have.been.calledWithExactly "show"
 
 	describe "onSaveToLocalStorage method", ->
-		it "should save the grid to local storage", ->
+		it "should add an element to the storage collection", ->
 			view = new Application.SaveDialogView()
-			storage = new Application.LocalStorage()
+			storage = new Application.Storage()
 
 			view.json = "json here"
 
 			storageMock = sinon.mock storage
-			storageMock.expects("addByJson").once().withExactArgs "pattern name", view.json
+			storageMock.expects("create").once().withExactArgs
+				name: "pattern name", pattern: view.json
 
 			view.storage = storage
 

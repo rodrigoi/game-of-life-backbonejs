@@ -32,6 +32,3 @@ describe "Application", ->
 
 		it "should initialize the ticker object", ->
 			Application.ticker.should.exist
-
-		it "should initialize the storage object", ->
-			Application.storage.should.exist
