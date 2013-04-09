@@ -162,7 +162,7 @@ The .gitignore file is located two levels down, on the dojo folder. Be careful w
 
 #### The Dependencies
 
-The front end uses [Backbone.js](http://backbonejs.org/), [Bootstrap](http://twitter.github.com/bootstrap/), [Modernizr](http://modernizr.com/) and [Underscore.JS](http://underscorejs.org/). It also uses the [FileServer.js](https://github.com/eligrey/FileSaver.js) dependency to manipulate blobs for file download.
+The front end uses [Backbone.js](http://backbonejs.org/), [Bootstrap](http://twitter.github.com/bootstrap/), [Modernizr](http://modernizr.com/) and [Underscore.JS](http://underscorejs.org/). It also uses the [FileServer.js](https://github.com/eligrey/FileSaver.js) dependency to manipulate blobs for file download. To access the browser's local storage, we use [Backbone.localStorage](http://documentup.com/jeromegn/backbone.localStorage).
 
 To run the tests and the code on node, we need [CoffeeScript](http://coffeescript.org/), [Mocha](http://visionmedia.github.com/mocha/) as the test runner, [Chai](http://chaijs.com/) for assertions, [Sinon.JS](http://sinonjs.org/) for stubs, spies and mock objects. Also, the [Sinon-Chai](http://chaijs.com/plugins/sinon-chai) assertion library will come handy. [Node Inspector](https://github.com/dannycoates/node-inspector) for debugging, [Node LocalStorage](https://github.com/lmaccherone/node-localstorage) as a drop in replacement for the browser's local storage. Also, we need the node packages for jQuery, Backbone and Underscore. Oh, and [express](http://expressjs.com/) to run the demo server.
 
@@ -200,13 +200,7 @@ The dialog class is an extension of Backbone.View that holds some boilerplate co
 
 ##### The Components
 
-The solution has two components that extend the Backbone.Component class. "localStorage" and "ticker". 
-
-###### Local Storage Component
-
-The local storage component is the one in charge of keeping track of changes in the browser's local storage. Objects are added, removed or retrieved using this object. It's also responsible of creating a json string representation of the games grid, and to update the grid from saved data.
-
-At first, I've used the backbone.localstorage module, but it proved to be inneficient with the volume of data the application manages. Also, when saving a collection, an entry for every cell was created, making impossible to have more than one pattern stored. A custom implementation saving **only** the living cells. That reduced the size of the grid payload from 66kb to 500bytes for the representation of Gosper's Glider Gun.
+The solution has one components that extend the Backbone.Component class. 
 
 ###### Ticker Component
 
@@ -235,6 +229,8 @@ But the important part is the "liveNeighbours" method. It uses an array represen
 Using that model, you can request a cell by it's index or by it's location on the grid.
 
 Width and Height of the grid are really important for those calculations ;)
+
+It is also responsible for creating a string representation of it's contennts, and to update the grid from saved data. It's not a one to one representation of the date. **Only** the living cells and some metadata is saved. That reduced the size of the grid payload from 66kb to 500bytes for the representation of Gosper's Glider Gun.
 
 ###### The Storage Item Model
 
