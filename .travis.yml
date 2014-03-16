@@ -16,6 +16,7 @@ deploy:
     secure: YZR9QTtOk0P9HH8NbC06VJJZ64eANlEi24JbUYX3Z66OJ+GWUxUDbfBeRU+vhsCCTWC/eOe1FElQcrGk8b56uY2KRtCI31BYeHDLhaipu4vm4S4JnA2+eCqlSsc8jLLwxv3lxRXlP2NCkpjL7dUlnjRPIFQGc3aJYVn+Pzj3Yc0=
   bucket: rodrigoi
   local-dir: src
-  upload-dir: game-of-life-backbone
+  upload-dir: game-of-life-backbonejs
+  skip_cleanup: true
   on:
     repo: rodrigoi/game-of-life-backbonejs
