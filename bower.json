@@ -1,0 +1,27 @@
+{
+  "name": "game-of-life-backbonejs",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rodrigoi/game-of-life-backbonejs",
+  "authors": [
+    "Rodrigo Iloro <rodrigo.iloro@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "bootstrap": "~2.3.1",
+    "modernizr": "~2.6.2",
+    "underscore": "~1.4.4",
+    "konami-js": "git://github.com/snaptortoise/konami-js.git",
+    "FileSaver.js": "git://github.com/eligrey/FileSaver.js.git",
+    "backbone.localStorage": "~1.1.0"
+  }
+}
