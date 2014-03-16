@@ -2,9 +2,10 @@ language: node_js
 node_js:
 - '0.8'
 before_script:
-- npm install -g mocha bower
+- npm install -g mocha
+- npm install -g bower
 - npm install
-- bower install -f
+- bower install -f -V
 - ls -al src/
 - ls -al
 script: mocha --recursive --reporter list
