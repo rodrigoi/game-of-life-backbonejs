@@ -17,7 +17,9 @@ Some history, from [Wikipedia](http://en.wikipedia.org/wiki/Conways_Game_of_Life
 
 ## Backbone.JS Implementation
 
-[![Build Status](https://travis-ci.org/rodrigoi/dojo.png?branch=master)](https://travis-ci.org/rodrigoi/dojo)
+[![Build Status](https://travis-ci.org/rodrigoi/game-of-life-backbone.png)](https://travis-ci.org/rodrigoi/game-of-life-backbone)
+[![Dependencies](https://david-dm.org/rodrigoi/game-of-life-backbone.png)](https://david-dm.org/rodrigoi/game-of-life-backbone#info=dependencies)
+[![Dev Dependencies](https://david-dm.org/rodrigoi/game-of-life-backbone/dev-status.png)](https://david-dm.org/rodrigoi/game-of-life-backbone#info=devDependencies)
 
 This folder contains the Backbone.JS implementation of [Conway's Game of Life](http://en.wikipedia.org/wiki/Conway's_Game_of_Life). You can check an online version of this code [here](http://rodrigoi.github.com/dojo/Conways-Game-of-Life/BackboneJS/).
 
