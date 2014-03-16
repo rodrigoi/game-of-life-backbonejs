@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-	- "0.8"
+  - "0.8"
 before_script:
-	- npm install -g mocha bower
-	- npm install
-	- bower install
+  - npm install -g mocha bower
+  - npm install
+  - bower install
 script: mocha --recursive --reporter list
 
 notifications:
-	email:
-		on_failure: change
+  email:
+    on_failure: change
