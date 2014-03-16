@@ -1,3 +1,8 @@
 {
-	"directory": "src/vendor"
+  "directory": "src/vendor",
+  "storage": {
+    "packages": ".bower-cache",
+    "registry": ".bower-registry"
+  },
+  "tmp": ".bower-tmp"
 }
