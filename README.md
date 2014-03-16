@@ -17,9 +17,9 @@ Some history, from [Wikipedia](http://en.wikipedia.org/wiki/Conways_Game_of_Life
 
 ## Backbone.JS Implementation
 
-[![Build Status](https://travis-ci.org/rodrigoi/game-of-life-backbone.png)](https://travis-ci.org/rodrigoi/game-of-life-backbone)
-[![Dependencies](https://david-dm.org/rodrigoi/game-of-life-backbone.png)](https://david-dm.org/rodrigoi/game-of-life-backbone#info=dependencies)
-[![Dev Dependencies](https://david-dm.org/rodrigoi/game-of-life-backbone/dev-status.png)](https://david-dm.org/rodrigoi/game-of-life-backbone#info=devDependencies)
+[![Build Status](https://travis-ci.org/rodrigoi/game-of-life-backbonejs.png)](https://travis-ci.org/rodrigoi/game-of-life-backbonejs)
+[![Dependencies](https://david-dm.org/rodrigoi/game-of-life-backbonejs.png)](https://david-dm.org/rodrigoi/game-of-life-backbonejs#info=dependencies)
+[![Dev Dependencies](https://david-dm.org/rodrigoi/game-of-life-backbonejs/dev-status.png)](https://david-dm.org/rodrigoi/game-of-life-backbonejs#info=devDependencies)
 
 This folder contains the Backbone.JS implementation of [Conway's Game of Life](http://en.wikipedia.org/wiki/Conway's_Game_of_Life). You can check an online version of this code [here](http://rodrigoi.github.com/dojo/Conways-Game-of-Life/BackboneJS/).
 
@@ -48,7 +48,7 @@ To run the samples, you need to use [bower](http://twitter.github.com/bower/) to
 	$ npm install
 	$ bower install
 	$ make start
-	
+
 	Now you can open your browser on http://localhost:1701
 
 That will load all the node dependencies for the mocha test runner, and all the bower dependencies for the web application. You can point your browser to [http://localhost:1701/](http://localhost:1701/)
@@ -82,7 +82,7 @@ and to start the dev server:
 In case you have trouble, try to install mocha, and bower as global packages. To do that, just run
 
 	$ npm install -g bower mocha
-	
+
 **Do not sudo npm**. Follow [this guide](http://howtonode.org/introduction-to-npm) if you need to su/sudo to install npm packages.
 
 ### User Interface
@@ -202,7 +202,7 @@ The dialog class is an extension of Backbone.View that holds some boilerplate co
 
 ##### The Components
 
-The solution has one components that extend the Backbone.Component class. 
+The solution has one components that extend the Backbone.Component class.
 
 ###### Ticker Component
 
