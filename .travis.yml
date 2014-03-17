@@ -5,7 +5,8 @@ before_script:
 - npm install -g mocha
 - npm install -g bower
 - npm install
-script: bower install -f -V; mocha --recursive --reporter list
+- bower install -f -V
+script: mocha --recursive --reporter spec
 notifications:
   email:
     on_failure: change
