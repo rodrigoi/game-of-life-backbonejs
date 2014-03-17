@@ -35,11 +35,11 @@ Oh, and the test runner won't watch files on Windows. Run on Linux/Mac to be saf
 
 Once you have the repository cloned in your computer, you should browse to this folder (dojo/Conways-Game-of-Life/JavaScript/BackboneJS). It should look like this (plus some hidden files):
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/root.png)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/root.png)
 
 Or like this, if you like the terminal:
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/root-cli.png)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/root-cli.png)
 
 That's the root folder for this project. **All scripts should be run from that location**.
 
@@ -63,7 +63,7 @@ For example, to run the tests, simply run:
 
 You should see something like this:
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/mocha.png)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/mocha.png)
 
 Isn't that [cute](https://www.youtube.com/watch?v=QH2-TGUlwu4)?
 
@@ -99,7 +99,7 @@ Once the game is started, all the controls are disabled, except for the lifespan
 
 The "Load Gosper's Glider Gun" and "Load Gosper's Bi-Gun" button will load two famous game patterns created in the 70's by famous mathematician and programmer [Bill Gosper](http://en.wikipedia.org/wiki/Bill_Gosper). Give them a try, both patterns shoot away the hacker logo…
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/main.png)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/main.png)
 
 The form bellow the game's world allows the user to set the lifespan of each generations. The value should be in milliseconds and can be set while the game is running. Once you click start, the game will use the value present on the field. The default is 50 milliseconds.
 
@@ -109,7 +109,7 @@ The toolbar bellow the game world clears the game, and enables the save and load
 
 If the user clicks the "Save" button below the game world, it's presented with the save dialog. If the button is disabled, it means that the game is running. To enable it, just click "Stop".
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/save.png)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/save.png)
 
 It is divided in three sections. The fist section is just a text area with a representation of the current pattern. The user can then select the text and copy it somewhere else…
 
@@ -121,7 +121,7 @@ The third section contains a form that allows the user to save the current game 
 
 If the user clicks the "Load" button below the game world, it's presented with the load dialog. If the button is disabled, it means that the game is running. Stop the game to enable the button by clicking "Stop"
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/load.png)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/load.png)
 
 Like the save dialog, it's divided in three sections. The first section allows the user to use drag and drop operations of json files previously downloaded. You should see a green dotted border in the drop target if you can drop a json file there.
 
@@ -226,7 +226,7 @@ It can randomize the state of the models, and also kill them all using the "clea
 
 But the important part is the "liveNeighbours" method. It uses an array representing the grid surrounding the cell in question, and returns the count of living cells. Here, like this:
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/grid.PNG)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/grid.PNG)
 
 Using that model, you can request a cell by it's index or by it's location on the grid.
 
@@ -285,7 +285,7 @@ Both dialogs use the Bootstrap "Modal" jQuery plugin.
 
 ##### The Tests
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/coverage.png)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/coverage.png)
 
 One of the challenges of this exercise is run a complete set of tests for the public javascript, meant to run on the server, using a node.js runner like mocha. Not just a headless browser like zombie or phantoms, but use only mocha.
 
@@ -335,4 +335,4 @@ Have fun, and enjoy your burrito ;)
 
 ----
 
-![image](https://raw.github.com/rodrigoi/dojo/master/Conways-Game-of-Life/JavaScript/BackboneJS/docs/sublime.png)
+![image](https://raw.github.com/rodrigoi/game-of-life-backbonejs/master/docs/sublime.png)
