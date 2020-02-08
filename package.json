@@ -22,7 +22,7 @@
     "bower": "~0.8.5",
     "express": "~3.1.0",
     "coffee-script": "~1.6.2",
-    "underscore": "~1.4.4",
+    "underscore": "~1.9.2",
     "backbone": "~1.0.0",
     "jquery": "~1.8.3",
     "jsdom": "~0.5.5",
