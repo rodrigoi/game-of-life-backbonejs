@@ -28,6 +28,6 @@
     "jsdom": "~0.5.5",
     "sinon": "~1.6.0",
     "node-inspector": "~0.2.0",
-    "node-localstorage": "~0.3.2"
+    "node-localstorage": "~2.1.6"
   }
 }
